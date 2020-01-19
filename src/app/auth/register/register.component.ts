@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public message: IError = null;
   public registerForm: FormGroup;
   public submitted: boolean = false;
+  public loading: boolean = false;
 
   constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private _router: Router) {
     if (this._authService.curentLoggedUserValue)
@@ -50,6 +51,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.registerForm.invalid)
       return;
 
+    this.loading = true;
     const birthDate = this.registerForm.get('birthDate').value;
 
     this._authService.register({
@@ -60,7 +62,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       password: this.registerForm.get('password').value,
       role: "user"
     })
-      .subscribe(res => console.log("Registered user: " + res));
+      .subscribe(res => {
+        this.loading = true;
+        this._router.navigate(['/login'])
+      });
   }
 
   login() {

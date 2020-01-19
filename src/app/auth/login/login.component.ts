@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public message: { cssClass: string, text: string } = null;
   public loginForm: FormGroup;
   public submitted: boolean = false;
+  public loading: boolean = false;
 
   constructor(private _authService: AuthService, private _router: Router, private _formBuilder: FormBuilder) {
     if (this._authService.curentLoggedUserValue)
@@ -49,13 +50,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm.invalid) {
       return;
     }
+    this.loading = true;
     const typedEmail = this.loginForm.get('email').value;
     const typedPassword = this.loginForm.get('password').value;
     this._authService.login(typedEmail, typedPassword)
       .pipe(first())
       .subscribe(user => {
-        if (user)
-          this._router.navigate(['/']);
+        if (user) {
+          this.loading = true;
+          this._router.navigate(['/home']);
+        }
       });
   }
 
