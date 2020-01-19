@@ -35,24 +35,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
       lastName: ['', Validators.required],
       email: ['', Validators.required],
       birthDate: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(6)]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  get registerFormControls() { return this.registerForm.controls; }
+  get formControls() { return this.registerForm.controls; }
 
   register() {
-    // this.submitted = true;
-    // if(!this.registerForm.invalid)
-    //   return;
+    this.submitted = true;
+    if(this.registerForm.invalid)
+      return;
+
+    const birthDate = this.registerForm.get('birthDate').value;
 
     this._authService.register({
-      firstName: "string",
-      lastName: "string",
-      birthDate: "string",
-      email: "string",
-      password: "string",
-      role: "string"
+      firstName: this.registerForm.get('firstName').value,
+      lastName: this.registerForm.get('lastName').value,
+      birthDate: `${birthDate.day}/${birthDate.month}/${birthDate.year}`,
+      email: this.registerForm.get('email').value,
+      password: this.registerForm.get('password').value,
+      role: "user"
     })
       .subscribe(res => console.log("Registered user: " + res));
   }
