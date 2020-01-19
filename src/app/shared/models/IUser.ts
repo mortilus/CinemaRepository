@@ -16,3 +16,11 @@ export interface ILoggedUser {
     role: string,
     token: string
 }
+export interface IRegisterUser {
+    firstName: string,
+    lastName: string,
+    birthDate: string,
+    email: string,
+    password: string,
+    role: string
+}

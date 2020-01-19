@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { IUser, ILoggedUser } from '../models/IUser';
+import { IUser, ILoggedUser, IRegisterUser } from '../models/IUser';
 import { MainService } from './main.service';
 import { map } from 'rxjs/operators';
 import { IError } from '../models/IError';
@@ -55,6 +55,10 @@ export class AuthService {
           } else { this._currentErrorSubject.next({ cssClass: 'alert alert-danger', text: 'Email wasn´t found' }); }
           return null;
         }));
+  }
+
+  register(user: IRegisterUser) {
+    return this._http.post(`${this._url}/users`, user);
   }
 
   logout() {

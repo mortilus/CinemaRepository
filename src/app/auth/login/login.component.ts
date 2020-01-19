@@ -54,9 +54,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._authService.login(typedEmail, typedPassword)
       .pipe(first())
       .subscribe(user => {
-        if (user) {
+        if (user)
           this._router.navigate(['/']);
-        }
       });
   }
 
