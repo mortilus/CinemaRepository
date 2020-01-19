@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { IError } from 'src/app/shared/models/IError';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public registerForm: FormGroup;
   public submitted: boolean = false;
 
-  constructor(private _formBuilder: FormBuilder, private _authService: AuthService) { }
+  constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private _router: Router) {
+    if (this._authService.curentLoggedUserValue)
+      this._authService.logout();
+  }
 
   ngOnInit() {
     this._initSubscriptions();
@@ -43,7 +47,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   register() {
     this.submitted = true;
-    if(this.registerForm.invalid)
+    if (this.registerForm.invalid)
       return;
 
     const birthDate = this.registerForm.get('birthDate').value;
@@ -57,6 +61,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       role: "user"
     })
       .subscribe(res => console.log("Registered user: " + res));
+  }
+
+  login() {
+    this._router.navigate(['/login']);
   }
 
   ngOnDestroy(): void {

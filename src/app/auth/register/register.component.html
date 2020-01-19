@@ -24,7 +24,8 @@
             <div class="form-group">
                 <div class="input-group">
                     <input class="form-control" placeholder="dd-mm-yyyy" name="dp" formControlName="birthDate"
-                        ngbDatepicker #d="ngbDatepicker" [ngClass]="{ 'is-invalid': submitted && formControls.birthDate.errors }">
+                        ngbDatepicker #d="ngbDatepicker"
+                        [ngClass]="{ 'is-invalid': submitted && formControls.birthDate.errors }">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()"
                             type="button"></button>
@@ -52,7 +53,8 @@
                 </div>
             </div>
             <div class="form-group float-right">
-                <button class="btn btn-outline-primary" type="submit">Register</button>
+                <a routerLink="/login" class="btn btn-link mr-3">Login</a>
+                <button class="btn btn-primary" type="submit">Register</button>
             </div>
         </form>
     </div>
