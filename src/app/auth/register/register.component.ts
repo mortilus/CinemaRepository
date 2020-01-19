@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private _initSubscriptions() {
     this._authService.currentError$
       .subscribe(errorMessage => {
+        this.loading = false;
         this.message = errorMessage;
       })
   }

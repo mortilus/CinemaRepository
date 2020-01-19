@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscrptions.push(
       this._authService.currentError$
         .subscribe(errorMessage => {
+          this.loading = false;
           this.message = errorMessage;
         })
     );
