@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +10,19 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
   }
 
   login() {
     this._authService.login("vendramemichele99@gmail.com", "test")
-      .subscribe(user => JSON.stringify(user));
+      .pipe(first())
+      .subscribe(user => {
+        if(user) {
+          this._router.navigate(['/']);
+        }
+      });
   }
 
 }

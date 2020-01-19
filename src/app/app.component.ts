@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './shared/services/auth.service';
+import { Router } from '@angular/router';
+import { ILoggedUser } from './shared/models/IUser';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +9,14 @@ import { AuthService } from './shared/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public currentUser: any = null;
+  public currentUser: ILoggedUser = null;
 
-  constructor(private _authService: AuthService) {
-    this._authService.currentUser.subscribe(x => this.currentUser = x);
+  constructor(private _authService: AuthService, private _router: Router) {
+    this._authService.currentUser.subscribe(user => this.currentUser = user);
   }
 
   logout() {
     this._authService.logout();
+    this._router.navigate(['/login']);
   }
 }
