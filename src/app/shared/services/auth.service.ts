@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { IUser, ILoggedUser } from '../models/IUser';
 import { MainService } from './main.service';
 import { map } from 'rxjs/operators';
+import { IError } from '../models/IError';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,14 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<ILoggedUser>;
   public currentUser: Observable<ILoggedUser>;
 
+  private _currentErrorSubject = new Subject<IError>();
+  currentError$ = this._currentErrorSubject.asObservable();
+
   constructor(
     private _http: HttpClient,
     private _mainService: MainService) {
     this._url = this._mainService.getMainUrl();
     this.currentUserSubject = new BehaviorSubject<ILoggedUser>(JSON.parse(localStorage.getItem('loggedUser')));
-    console.log("Current user subject: " + JSON.stringify(this.currentUserSubject));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -42,24 +45,20 @@ export class AuthService {
               role: foundUser.role,
               token: 'fake-jwt-token'
             };
-            localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
-            this.currentUserSubject.next(loggedUser)
+            localStorage.setItem('loggedUser', JSON.stringify(loggedUser)); //User saved in ls
+            this._currentErrorSubject.next({ cssClass: 'alert alert-success', text: 'Successfuly logged in!' });
+            this.currentUserSubject.next(loggedUser); //Logged user subject is updated
             return loggedUser;
           }
+          if (userList.find(u => u.email === email)) {
+            this._currentErrorSubject.next({ cssClass: 'alert alert-danger', text: 'Password incorrect, retype it' });
+          } else { this._currentErrorSubject.next({ cssClass: 'alert alert-danger', text: 'Email wasn´t found' }); }
           return null;
-          // console.log("User " + JSON.stringify(user));
-          // // login successful if there's a jwt token in the response
-          // if (user && user.token) {
-          //   // store user details and jwt token in local storage to keep user logged in between page refreshes
-          //   localStorage.setItem('currentUser', JSON.stringify(user));
-          //   this.currentUserSubject.next(user);
-          // }
-
-          // return user;
         }));
   }
 
   logout() {
+    debugger;
     localStorage.removeItem('loggedUser');
     this.currentUserSubject.next(null);
   }

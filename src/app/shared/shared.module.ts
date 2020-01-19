@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
   declarations: [],
   imports: [
     CommonModule
-  ]
+  ],
+  // exports: [
+  //   FormsModule,
+  //   ReactiveFormsModule
+  // ]
 })
 export class SharedModule { }
