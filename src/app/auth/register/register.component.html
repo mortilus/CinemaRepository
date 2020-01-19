@@ -22,11 +22,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Birthdate</label>
-                <input class="form-control" type="text" formControlName="birthDate"
-                    [ngClass]="{ 'is-invalid': submitted && formControls.birthDate.errors }">
-                <div *ngIf="submitted && registerFormControls.birthDate.errors" class="invalid-feedback d-block">
-                    <div *ngIf="registerFormControls.birthDate.errors.required">Birthdate is required</div>
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="birthDate"
+                        ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
