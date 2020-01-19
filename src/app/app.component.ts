@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public currentUser: any = null;
 
-  logout() {
+  constructor(private _authService: AuthService) {
+    this._authService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
+  logout() {
+    this._authService.logout();
   }
 }

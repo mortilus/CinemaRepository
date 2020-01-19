@@ -17,14 +17,22 @@ export class AuthService {
   constructor(
     private _http: HttpClient,
     private _mainService: MainService) {
-      this._url = this._mainService.getMainUrl();
-    }
+    this._url = this._mainService.getMainUrl();
+    this.currentUserSubject = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('loggedUser')));
+    console.log("Current user subject: " + JSON.stringify(this.currentUserSubject));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get curentLoggedUserValue(): IUser {
+    return this.currentUserSubject.value;
+  }
 
   login(email: string, password: string) {
-    return this._http.get<any>(`${this._url}/users`)
+    return this._http.get<IUser>(`${this._url}/users`)
       .pipe(
-        map(user => {
-          console.log("User " + JSON.stringify(user));
+        map(userList => {
+          
+          // console.log("User " + JSON.stringify(user));
           // // login successful if there's a jwt token in the response
           // if (user && user.token) {
           //   // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -34,5 +42,10 @@ export class AuthService {
 
           // return user;
         }));
+  }
+
+  logout() {
+    localStorage.removeItem('loggedUser');
+    this.currentUserSubject.next(null);
   }
 }

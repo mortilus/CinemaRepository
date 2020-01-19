@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // this._authService.login("vendramemichele99@gmail.com", "test");
+    this._authService.login("vendramemichele99@gmail.com", "test")
+      .subscribe(user => JSON.stringify(user));
   }
 
 }
