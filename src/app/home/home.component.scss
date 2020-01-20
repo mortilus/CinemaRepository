@@ -1,0 +1,9 @@
+.imageContainer {
+    overflow: hidden;
+    img {
+        transition: transform .5s ease;
+    }
+    :hover {
+        transform: scale(1.05);
+    }
+}

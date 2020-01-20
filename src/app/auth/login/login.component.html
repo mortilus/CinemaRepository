@@ -1,4 +1,74 @@
-<div class="container">
-    <h5>Login</h5>
-    <button class="btn btn-primary" (click)="login()">login</button>
-</div>
+<section class="min-vh-100 cover">
+    <div class="coverCaption">
+        <div class="container">
+            <div class="row text-white">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                    <h3>Login</h3>
+                    <div class="">
+                        <form [formGroup]="loginForm" (ngSubmit)="login()" class="justify-content-center">
+                            <div class="form-group text-left">
+                                <label>Email</label>
+                                <input class="form-control" type="text" formControlName="email"
+                                    [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }">
+                                <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback d-block">
+                                    <div *ngIf="formControls.email.errors.required">Email is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group text-left">
+                                <label>Password</label>
+                                <input class="form-control" type="password" formControlName="password"
+                                    [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }">
+                                <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback d-block">
+                                    <div *ngIf="formControls.password.errors.required">Password is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group float-right">
+                                <a routerLink="/register" class="btn btn-link mr-3">Register</a>
+                                <button [disabled]="loading" class="btn btn-primary" (click)="login()">
+                                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <div class="perfectCentering" style="padding-top: 50px;"> -->
+<!-- <div class="col-lg-6"> -->
+<!-- <div class="p-0 card">
+            <h5 class="card-header text-center">Login</h5>
+            <div class="card-body">
+                <div *ngIf="message" [ngClass]="message.cssClass">{{message.text}}</div>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input class="form-control" type="text" formControlName="email"
+                            [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }">
+                        <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback d-block">
+                            <div *ngIf="formControls.email.errors.required">Email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" formControlName="password"
+                            [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }">
+                        <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback d-block">
+                            <div *ngIf="formControls.password.errors.required">Password is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group float-right">
+                        <a routerLink="/register" class="btn btn-link mr-3">Register</a>
+                        <button [disabled]="loading" class="btn btn-primary" (click)="login()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div> -->
+<!-- </div> -->
+<!-- </div> -->

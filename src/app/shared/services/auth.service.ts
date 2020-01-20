@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { IUser } from '../models/IUser';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { IUser, ILoggedUser, IRegisterUser } from '../models/IUser';
 import { MainService } from './main.service';
 import { map } from 'rxjs/operators';
+import { IError } from '../models/IError';
 
 @Injectable({
   providedIn: 'root'
@@ -11,28 +12,57 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   private _url: string = '';
 
-  private currentUserSubject: BehaviorSubject<IUser>;
-  public currentUser: Observable<IUser>;
+  private currentUserSubject: BehaviorSubject<ILoggedUser>;
+  public currentUser: Observable<ILoggedUser>;
+
+  private _currentErrorSubject = new Subject<IError>();
+  currentError$ = this._currentErrorSubject.asObservable();
 
   constructor(
     private _http: HttpClient,
     private _mainService: MainService) {
-      this._url = this._mainService.getMainUrl();
-    }
+    this._url = this._mainService.getMainUrl();
+    this.currentUserSubject = new BehaviorSubject<ILoggedUser>(JSON.parse(localStorage.getItem('loggedUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
-  login(email: string, password: string) {
-    return this._http.get<any>(`${this._url}/users`)
+  public get curentLoggedUserValue(): ILoggedUser {
+    return this.currentUserSubject.value;
+  }
+
+  login(email: string, password: string): Observable<ILoggedUser> {
+    return this._http.get<IUser[]>(`${this._url}/users`)
       .pipe(
-        map(user => {
-          console.log("User " + JSON.stringify(user));
-          // // login successful if there's a jwt token in the response
-          // if (user && user.token) {
-          //   // store user details and jwt token in local storage to keep user logged in between page refreshes
-          //   localStorage.setItem('currentUser', JSON.stringify(user));
-          //   this.currentUserSubject.next(user);
-          // }
-
-          // return user;
+        map(userList => {
+          var foundUser: IUser = userList.find(u => u.email === email && u.password === password);
+          if (foundUser) {
+            var loggedUser: ILoggedUser = {
+              id: foundUser.id,
+              firstName: foundUser.firstName,
+              lastName: foundUser.lastName,
+              birthDate: foundUser.birthDate,
+              email: foundUser.email,
+              role: foundUser.role,
+              token: 'fake-jwt-token'
+            };
+            localStorage.setItem('loggedUser', JSON.stringify(loggedUser)); //User saved in ls
+            this._currentErrorSubject.next({ cssClass: 'alert alert-success', text: 'Successfuly logged in!' });
+            this.currentUserSubject.next(loggedUser); //Logged user subject is updated
+            return loggedUser;
+          }
+          if (userList.find(u => u.email === email)) {
+            this._currentErrorSubject.next({ cssClass: 'alert alert-danger', text: 'Password incorrect, retype it' });
+          } else { this._currentErrorSubject.next({ cssClass: 'alert alert-danger', text: 'Email wasn´t found' }); }
+          return null;
         }));
+  }
+
+  register(user: IRegisterUser) {
+    return this._http.post(`${this._url}/users`, user);
+  }
+
+  logout() {
+    localStorage.removeItem('loggedUser');
+    this.currentUserSubject.next(null);
   }
 }
