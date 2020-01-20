@@ -3,11 +3,7 @@
 // @import 'variables';
 @import '_variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
-
-// $theme-colors: (
-//     "primary": yellow,
-//     "secondary": red
-// );
+@import '~animate.css/animate.min';
 
     body {
         background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
