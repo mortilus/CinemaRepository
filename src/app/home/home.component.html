@@ -1,7 +1,7 @@
 <app-carousel *ngIf="movies.length > 0" [movies]="movies"></app-carousel>
 <div class="container pt-3">
     <div class="row">
-        <div *ngFor="let movie of movies" class="col-lg-3 col-md-4 col-6">
+        <div *ngFor="let movie of movies" class="animated fadeIn col-lg-3 col-md-4 col-6">
             <a href="#" class="d-block mb-4 h-100" style="text-decoration: none;">
                 <img class="img-fluid" [src]="movie.poster" alt="">
                 <h4 class="mt-2">{{ movie.title }}</h4>
