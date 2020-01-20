@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public bestRatedMovies: any[] = [];
   public movieSearch: string = '';
   public page: number = 1;
-  public itemsPerPage: number = 20;
+  public itemsPerPage: number = 12;
 
   constructor(private _moviesService: MoviesService) { }
 
