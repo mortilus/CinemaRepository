@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MoviesService } from 'src/app/shared/services/movies.service';
 
 @Component({
   selector: 'app-carousel',
@@ -6,11 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-  @Input() movies: any[] = [];
+  public movies: any[] = [];
 
-  constructor() { }
+  constructor(private _movieService: MoviesService) { }
 
   ngOnInit() {
+    this._movieService.getMovies('', 1, 3)
+      .subscribe(list => {
+        if(list.length > 2)
+          this.movies = [...list];
+      })
   }
 
 }

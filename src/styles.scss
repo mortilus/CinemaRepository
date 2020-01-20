@@ -5,10 +5,14 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import '~animate.css/animate.min';
 
-    body {
-        background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
+body {
+    background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
     color: rgba(255, 255, 255, 0.75);
-    }
+}
+
+// html {
+//     background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
+// }
 
 // a {
 //     color: #777;

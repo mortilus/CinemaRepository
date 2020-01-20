@@ -1,20 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MoviesService } from '../shared/services/movies.service';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  // public images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
-  public movies: any[] = [];
+export class HomeComponent implements OnInit, AfterViewInit {
+  @ViewChild('movieSearchId', { static: true }) movieFilter: ElementRef;
 
-  constructor(private _moviesService: MoviesService) { }
+  public movies: any[] = [];
+  public bestRatedMovies: any[] = [];
+  public movieSearch: string = '';
+  public page: number = 1;
+  public itemsPerPage: number = 12;
+
+  constructor(private _moviesService: MoviesService, private _router: Router) { }
 
   ngOnInit() {
-    this._moviesService.getMovies()
-      .subscribe(res => this.movies = res);
+    this._getMoviesFiltered();
+    this._getHighestRatedMovies();
   }
 
+  private _getMoviesFiltered() {
+    this._moviesService.getMovies(this.movieSearch, this.page, this.itemsPerPage)
+      .subscribe(res => this.movies = res);
+  }
+  private _getHighestRatedMovies() {
+    this._moviesService.getHighestRatedMovies(this.page, 4)
+      .subscribe(res => this.bestRatedMovies = res);
+  }
+
+  showMovieDetails(id: number) {
+    this._router.navigate(['/home/movies/'+id]);
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.movieFilter.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged()
+      ).subscribe(res => {
+        this._getMoviesFiltered();
+      })
+  }
 }

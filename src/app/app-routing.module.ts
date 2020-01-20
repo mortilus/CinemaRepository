@@ -10,6 +10,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'home/movies',
+    loadChildren: () => import('./movie-detail/movie-detail.module').then(m => m.MovieDetailModule),
+    canActivate: [AuthGuard]
+  },
 
   { path: '**', redirectTo: 'home' }
 ];
