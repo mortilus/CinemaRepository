@@ -13,6 +13,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   public movies: any[] = [];
   public movieSearch: string = '';
+  public page: number = 1;
+  public itemsPerPage: number = 8;
 
   constructor(private _moviesService: MoviesService) { }
 
@@ -21,8 +23,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   private _getMoviesFiltered() {
-    this._moviesService.getMovies(this.movieSearch, 0, 10)
+    this._moviesService.getMovies(this.movieSearch, this.page, this.itemsPerPage)
       .subscribe(res => this.movies = res);
+  }
+
+  loadMoreMovies() {
+    this.page++;
+    this._getMoviesFiltered();
   }
 
   ngAfterViewInit(): void {
