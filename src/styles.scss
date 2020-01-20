@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+// @import 'customize-bootstrap.scss';
+// @import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+$primary: red;
+
+// $theme-colors: (
+//     "primary": yellow,
+//     "secondary": red
+// );
+
+body {
+    background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+// a {
+//     color: #777;
+//   transition: all 0.4s;
+//   &:hover {
+//     color: #fff;
+//     text-decoration: none;
+//   }
+// }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: rgba(255, 255, 255, 0.8)
+}
