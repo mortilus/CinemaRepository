@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { MainService } from './main.service';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,14 @@ export class MoviesService {
     this._url = this._mainService.getMainUrl();
   }
 
-  getMovies() {
-    return this._http.get<any>(`${this._url}/movies`);
+  getMovies(searchedMovie: string, page: number, limit: number) {
+    var url: string = `${this._url}/movies`;
+    if(searchedMovie && searchedMovie != '') {
+      url = `${this._url}/movies?title_like=${searchedMovie}`;
+    }
+    const params = new HttpParams()
+      .set('_page', page.toString())
+      .set('_limit', limit.toString());
+    return this._http.get<any>(url, { params });
   }
 }
