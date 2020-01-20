@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('movieSearchId', { static: true }) movieFilter: ElementRef;
 
   public movies: any[] = [];
+  public bestRatedMovies: any[] = [];
   public movieSearch: string = '';
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -20,11 +21,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this._getMoviesFiltered();
+    this._getHighestRatedMovies();
   }
 
   private _getMoviesFiltered() {
     this._moviesService.getMovies(this.movieSearch, this.page, this.itemsPerPage)
       .subscribe(res => this.movies = res);
+  }
+  private _getHighestRatedMovies() {
+    this._moviesService.getHighestRatedMovies(this.page, 4)
+      .subscribe(res => this.bestRatedMovies = res);
   }
 
   ngAfterViewInit(): void {
