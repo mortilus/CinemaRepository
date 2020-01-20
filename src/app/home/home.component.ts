@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { MoviesService } from '../shared/services/movies.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public page: number = 1;
   public itemsPerPage: number = 12;
 
-  constructor(private _moviesService: MoviesService) { }
+  constructor(private _moviesService: MoviesService, private _router: Router) { }
 
   ngOnInit() {
     this._getMoviesFiltered();
@@ -31,6 +32,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private _getHighestRatedMovies() {
     this._moviesService.getHighestRatedMovies(this.page, 4)
       .subscribe(res => this.bestRatedMovies = res);
+  }
+
+  showMovieDetails(id: number) {
+    this._router.navigate(['/home/movies/'+id]);
   }
 
   ngAfterViewInit(): void {

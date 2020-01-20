@@ -1,6 +1,7 @@
 .homeContainer {
     .imageContainer {
         overflow: hidden;
+        cursor: pointer;
         img {
             transition: transform .5s ease;
         }

@@ -23,8 +23,14 @@ export class MoviesService {
       .set('_limit', limit.toString());
     return this._http.get<any[]>(url, { params });
   }
+
   getHighestRatedMovies(page: number, limit: number) {
     var url: string = `${this._url}/movies?_sort=imdbRating&_order=desc&_page=${page}&_limit=${limit}`;
     return this._http.get<any[]>(url);
+  }
+
+  getMovieById(id: number) {
+    var url: string = `${this._url}/movies/${id}?_embed=showtimes`;
+    return this._http.get<any>(url);
   }
 }

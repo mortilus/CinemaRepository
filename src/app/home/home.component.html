@@ -3,10 +3,10 @@
     <h3 class="mb-3">Highest rated</h3>
     <div class="row">
         <div *ngFor="let movie of bestRatedMovies" class="animated fadeIn col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
+            <div (click)="showMovieDetails(movie.id)" href="#" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
                 <img class="img-fluid" [src]="movie.poster" alt="image not found">
                 <h5 class="mt-2">{{ movie.title }}</h5>
-            </a>
+            </div>
         </div>
     </div>
     <h3 class="mb-3">All movies</h3>
@@ -15,10 +15,10 @@
     </div>
     <div class="row">
         <div *ngFor="let movie of movies" class="animated fadeIn col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
+            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
                 <img class="img-fluid" [src]="movie.poster" alt="image not found">
                 <h5 class="mt-2">{{ movie.title }}</h5>
-            </a>
+            </div>
         </div>
     </div>
 </div>
