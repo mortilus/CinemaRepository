@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { MainService } from './main.service';
 import { Observable } from 'rxjs';
 import { IMovie } from '../models/IMovie';
+import { ISeat } from '../models/ISeat';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class MoviesService {
   getMovieById(id: number) { //Movie with the embeded showtimes
     var url: string = `${this._url}/movies/${id}?_embed=showtimes`;
     return this._http.get<IMovie>(url);
+  }
+
+  getSeatsByMovieId(id: number) {
+    const url = `${this._url}/seats?movieId=${id}`;
+    return this._http.get<ISeat[]>(url);
   }
 }

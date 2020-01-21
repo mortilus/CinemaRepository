@@ -23,24 +23,34 @@
             <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
         </div>
 
-        <div class="customTab mt-3">
-            <ngb-tabset [destroyOnHide]="false">
-                <ngb-tab title="Today">
-                    <ng-template ngbTabContent>
-                        <div style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
-                            <button *ngFor="let time of todatyTimes" class="btn customTimeButton mr-2 mt-2">{{ time }}</button>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab title="Tomorrow">
-                    <ng-template ngbTabContent>
-                        <div style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
-                            <button *ngFor="let time of tomorrowTimes" class="btn customTimeButton mr-2 mt-2">{{ time }}</button>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
-        </div>
-        
+        <app-booking-system [todayTimes]="todayTimes" [tomorrowTimes]="tomorrowTimes"
+            (selectedTime)="timeSelected($event, bookingModal)"></app-booking-system>
+
     </div>
 </div>
+
+<ng-template #bookingModal let-modal>
+    <div class="modal-body">
+        <div class="row pr-3 pl-3 mb-3">
+            <h4 class="modal-title">{{ selectedTime.date | titlecase }} at {{ selectedTime.time }}</h4>
+        </div>
+        <div class="row d-flex align-items-center justify-content-center pr-2 pl-2">
+            <button class="btn customModalButton mr-3" [disabled]="seatsCounter === 0" (click)="removeSeat()">
+                <i class="fa fa-minus"></i>
+            </button>
+            <h3>{{ seatsCounter }}</h3>
+            <button class="btn customModalButton ml-3" [disabled]="seatsCounter >= seatObj.available"
+                (click)="addSeat()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center text-white mt-3 mb-3">
+            <label>OCCUPIED: {{ seatObj.assigned }}</label>
+            <label>AVAILABLE: {{ seatObj.available }}</label>
+        </div>
+        <div class="row d-flex align-items-center justify-content-end" style="padding: 0px 20px;">
+            <button class="btn btn-primary customModalButton mr-2" (click)="modal.close()">Cancel</button>
+            <button class="btn btn-primary customModalButton">Book</button>
+        </div>
+    </div>
+</ng-template>
