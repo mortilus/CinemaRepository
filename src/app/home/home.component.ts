@@ -3,6 +3,7 @@ import { MoviesService } from '../shared/services/movies.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { IMovie } from '../shared/models/IMovie';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,8 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('movieSearchId', { static: true }) movieFilter: ElementRef;
 
-  public movies: any[] = [];
-  public bestRatedMovies: any[] = [];
+  public movies: IMovie[] = [];
+  public bestRatedMovies: IMovie[] = [];
   public movieSearch: string = '';
   public page: number = 1;
   public itemsPerPage: number = 12;
