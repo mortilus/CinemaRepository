@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMovie } from 'src/app/shared/models/IMovie';
 import { ISeat } from 'src/app/shared/models/ISeat';
+import { IBooking } from 'src/app/shared/models/IBooking';
+import { MainService } from 'src/app/shared/services/main.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { BookingService } from 'src/app/shared/services/booking.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -16,14 +20,19 @@ export class MovieDetailComponent implements OnInit {
   public tomorrowTimes: string[] = [];
   public selectedTime: { date: string, time: string } = null;
 
+  //Modal variables
   private _modalToOpen: any = null;
   public seatsCounter: number = 0;
   public seatObj: ISeat = null;
+  public booking: boolean = false;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _moviesService: MoviesService,
-    private _modalService: NgbModal) { }
+    private _modalService: NgbModal,
+    private _authService: AuthService,
+    private _bookingService: BookingService,
+    private _router: Router) { }
 
   ngOnInit() {
     this._initMovie();
@@ -50,19 +59,18 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
+  public timeSelected(time: { date: string, time: string }, modal: any) {
+    this.selectedTime = time;
+    this._modalToOpen = modal;
+    this._getMovieSeats();
+  }
   private _getMovieSeats() {
     this._moviesService.getSeatsByMovieId(this.selectedMovie.id)
       .subscribe(res => {
         if (res[0])
           this.seatObj = res[0];
-          this._modalService.open(this._modalToOpen, { centered: true, backdrop: 'static' });
+        this._modalService.open(this._modalToOpen, { centered: true, backdrop: 'static' });
       });
-  }
-
-  public timeSelected(time: { date: string, time: string }, modal: any) {
-    this.selectedTime = time;
-    this._modalToOpen = modal;
-    this._getMovieSeats();
   }
 
   public addSeat() {
@@ -70,6 +78,24 @@ export class MovieDetailComponent implements OnInit {
   }
   public removeSeat() {
     this.seatsCounter--;
+  }
+
+  public book(modal: any) {
+    this.booking = true;
+    const reservation: IBooking = {
+      userId: this._authService.curentLoggedUserValue.id,
+      movieId: this.selectedMovie.id,
+      reservedSeats: this.seatsCounter,
+      date: this.selectedTime.date,
+      time: this.selectedTime.time
+    }
+    this._bookingService.bookMovieTickets(reservation)
+      .subscribe(res => {
+        this.seatsCounter = 0;
+        this.booking = false;
+        modal.close();
+        this._router.navigate(['/home']);
+      })
   }
 
 }

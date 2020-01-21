@@ -48,9 +48,15 @@
             <label>OCCUPIED: {{ seatObj.assigned }}</label>
             <label>AVAILABLE: {{ seatObj.available }}</label>
         </div>
+        <div class="d-flex justify-content-end text-white mb-3">
+            <h5>TOTAL: 10€</h5>
+        </div>
         <div class="row d-flex align-items-center justify-content-end" style="padding: 0px 20px;">
             <button class="btn btn-primary customModalButton mr-2" (click)="modal.close()">Cancel</button>
-            <button class="btn btn-primary customModalButton">Book</button>
+            <button class="btn btn-primary customModalButton" [disabled]="seatsCounter === 0" (click)="book(modal)">
+                <span *ngIf="booking" class="spinner-border spinner-border-sm mr-1"></span>
+                Book
+            </button>
         </div>
     </div>
 </ng-template>
