@@ -1,0 +1,12 @@
+<div class="footerContainer">
+    <h3 class="mb-3">Other movies</h3>
+    <div class="row">
+        <div *ngFor="let movie of movies" class="animated fadeIn col-lg-2 col-md-3 col-6">
+            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer"
+                style="text-decoration: none;">
+                <img class="img-fluid" style="max-height: 300px;" [src]="movie.poster" alt="image not found">
+                <h6 class="mt-2">{{ movie.title }}</h6>
+            </div>
+        </div>
+    </div>
+</div>
