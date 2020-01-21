@@ -11,7 +11,7 @@
 
 .cover {
     //background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
-    background-color: gray;
+    background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
     background-size: cover;
     height: 100%;
     display: flex;
@@ -33,7 +33,10 @@ form:before {
     position: absolute;
     top: 0;
     width: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
+    // background: rgb(58, 58, 58);
+    box-shadow: 0 0 20px 1px rgba(100, 100, 100, 0.6);
+    // background-color: rgba(0,0,0,0.3);
     z-index: -1;
-    border-radius: 5px;
+    border-radius: 10px;
 }
