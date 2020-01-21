@@ -32,6 +32,6 @@ export class MoviesService {
 
   getMovieById(id: number) { //Movie with the embeded showtimes
     var url: string = `${this._url}/movies/${id}?_embed=showtimes`;
-    return this._http.get<any>(url);
+    return this._http.get<IMovie>(url);
   }
 }

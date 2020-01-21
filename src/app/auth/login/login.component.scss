@@ -10,8 +10,8 @@
 
 .cover {
   background: #222 url("https://cdn.wallpapersafari.com/0/11/oJNcCs.jpg");
-  background-position: left 300px top 50%;
-  background-size: initial;
+  background-position: left 500px top 50%;
+  background-size: auto;
 
   // background-repeat: no-repeat;
   // background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
@@ -38,6 +38,7 @@ form:before {
   top: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
+  
   // background: linear-gradient(to bottom,#191919 0,#000 100%) no-repeat #000;
   // background: rgb(58, 58, 58);
   box-shadow: 0 0 20px 1px rgba(100, 100, 100, 0.6);

@@ -12,5 +12,16 @@ export interface IMovie {
     release_date: string,
     showing: string,
     runtime: number,
-    mpaa: string
+    mpaa: string,
+    showtimes?: IShowtime[]
+}
+
+export interface IShowtime {
+    movieId: number,
+    showtimes: ITime[]
+}
+
+export interface ITime {
+    date: string,
+    times: string[]
 }

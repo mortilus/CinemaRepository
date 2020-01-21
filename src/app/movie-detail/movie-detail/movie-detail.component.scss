@@ -1,0 +1,15 @@
+.customTimeButton {
+    color: white;
+    border: 0.6px solid white;
+    
+}
+
+
+::ng-deep  .customTab .nav-tabs .nav-link.active
+{
+    color:black;
+}
+::ng-deep .customTab .nav-tabs .nav-link
+{
+    color:white;
+}

@@ -10,7 +10,12 @@
 
 .cover {
   //background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
-  background-color: linear-gradient(to bottom, #191919 0, #000 100%) no-repeat #000;
+  // background-color: linear-gradient(to bottom, #191919 0, #000 100%) no-repeat #000;
+
+  background: #222 url("https://cdn.wallpapersafari.com/0/11/oJNcCs.jpg");
+  background-position: left 500px top 50%;
+  background-size: initial;
+  
   background-size: cover;
   height: 100%;
   display: flex;

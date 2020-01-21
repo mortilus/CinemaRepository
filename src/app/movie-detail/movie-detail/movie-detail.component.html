@@ -10,13 +10,35 @@
         <p class="text-white">{{ selectedMovie.overview }}</p>
         <br>
         <div class="text-white d-flex align-items-center">
-            <h5 style="margin: 0px" class="text-white">Director:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.director }}</p>
+            <h5 style="margin: 0px" class="text-white">Director:</h5>
+            <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.director }}</p>
         </div>
         <div class="text-white d-flex align-items-center mt-3">
-            <h5 style="margin: 0px" class="text-white">Cast:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;" *ngFor="let cast of selectedMovie.cast">{{ cast }},</p>
+            <h5 style="margin: 0px" class="text-white">Cast:</h5>
+            <p style="margin: 0px 0px 0px 10px; color: darkgray;" *ngFor="let cast of selectedMovie.cast">{{ cast }},
+            </p>
         </div>
         <div class="text-white d-flex align-items-center mt-3">
-            <h5 style="margin: 0px" class="text-white">Running time:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
+            <h5 style="margin: 0px" class="text-white">Running time:</h5>
+            <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
+        </div>
+        <div class="customTab mt-3">
+            <ngb-tabset [destroyOnHide]="false">
+                <ngb-tab title="Today">
+                    <ng-template ngbTabContent>
+                        <div style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
+                            <button *ngFor="let time of todatyTimes" class="btn customTimeButton mr-2 mt-2">{{ time }}</button>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Tomorrow">
+                    <ng-template ngbTabContent>
+                        <div style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
+                            <button *ngFor="let time of tomorrowTimes" class="btn customTimeButton mr-2 mt-2">{{ time }}</button>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </div>
     </div>
 </div>
