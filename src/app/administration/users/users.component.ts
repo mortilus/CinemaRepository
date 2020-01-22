@@ -28,15 +28,8 @@ export class UsersComponent implements OnInit {
       .subscribe(users => this.users = users);
   }
 
-  public selectUser(user: IUser) {
+  public selectUser(user: IUser) { //User was selected
     this.selectedUser = user;
-  }
-
-  public getUpdatedUser(id: number) {
-    this._usersService.getUserById(id)
-      .subscribe(user => {
-        this.selectedUser = user;
-      });
   }
 
   public deleteReservation(reservation: IReservation) {
@@ -44,8 +37,18 @@ export class UsersComponent implements OnInit {
     this._reservationService.removeReservation(reservation.id)
       .subscribe(res => {
         this.getUpdatedUser(this.selectedUser.id);
-        this._initUsers();
         this.loading = false;
+      });
+  }
+
+  public getUpdatedUser(id: number) { //Needed to update the single user in the users list
+    this._usersService.getUserById(id)
+      .subscribe(user => {
+        const indexOldUser = this.users.indexOf(this.selectedUser);
+        if(indexOldUser != -1) {
+          this.selectedUser = user;
+          this.users[indexOldUser] = this.selectedUser;
+        }
       });
   }
 }
