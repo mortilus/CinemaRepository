@@ -13,14 +13,25 @@
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <!-- <div class="input-group mr-sm-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" style="background-color: lightgray;" id="basic-addon1">
-              <i class="fa fa-search"></i>
-            </span>
+        <!-- <ul class="navbar-nav mr-auto" *ngxPermissionsOnly="['admin']">
+          <li class="nav-item active">
+            <a class="nav-link">Administration</a>
+          </li>
+        </ul> -->
+
+        <!-- Only admins can access this page -->
+        <div class="nav-item dropdown" *ngxPermissionsOnly="['admin']">
+          <button class="btn btn-outline-secondary nav-link dropdown-toggle mr-4" href="#" id="navbarDropdownMenuLink"
+            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Administration
+          </button>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <button class="btn btn-default dropdown-item" (click)="goToAdministrationUsers()">
+              <i class="fa fa-user"></i>
+              Users
+            </button>
           </div>
-          <input type="text" class="form-control" placeholder="Movie..." aria-describedby="basic-addon1">
-        </div> -->
+        </div>
         <div class="nav-item dropdown">
           <button class="btn btn-outline-secondary nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,9 +53,8 @@
 <main role="main">
   <router-outlet></router-outlet>
 
-  <footer class="container">
-    <!-- <p style="color: white;">@Michele Vendrame</p> -->
-  </footer>
+  <!-- <footer class="container">
+  </footer> -->
 </main>
 
 

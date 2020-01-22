@@ -5,6 +5,7 @@ import { IUser, ILoggedUser, IRegisterUser } from '../models/IUser';
 import { MainService } from './main.service';
 import { map } from 'rxjs/operators';
 import { IError } from '../models/IError';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    private _mainService: MainService) {
+    private _mainService: MainService,
+    private _permissionsService: NgxPermissionsService) {
     this._url = this._mainService.getMainUrl();
     this.currentUserSubject = new BehaviorSubject<ILoggedUser>(JSON.parse(localStorage.getItem('loggedUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -34,6 +36,7 @@ export class AuthService {
     return this._http.get<IUser[]>(`${this._url}/users`)
       .pipe(
         map(userList => {
+          //If the user is found, it means that the credentials were correct
           var foundUser: IUser = userList.find(u => u.email === email && u.password === password);
           if (foundUser) {
             var loggedUser: ILoggedUser = {
@@ -46,6 +49,7 @@ export class AuthService {
               token: 'fake-jwt-token'
             };
             localStorage.setItem('loggedUser', JSON.stringify(loggedUser)); //User saved in ls
+            this._permissionsService.loadPermissions([loggedUser.role]);
             this._currentErrorSubject.next({ cssClass: 'alert alert-success', text: 'Successfuly logged in!' });
             this.currentUserSubject.next(loggedUser); //Logged user subject is updated
             return loggedUser;

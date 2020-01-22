@@ -1,0 +1,20 @@
+.cover {
+    background: rgb(36, 40, 44);
+    background-position: left 400px top 50%;
+    background-size: auto;
+    height: 100%;
+    display: flex;
+    position: relative;
+  }
+.coverCaption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    .reservationCard {
+        border: 0.5px solid white;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.911);
+        box-shadow: 0 0 20px 1px rgba(100, 100, 100, 0.6);
+    }
+}
+  

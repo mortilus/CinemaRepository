@@ -1,39 +1,28 @@
-// .perfectCentering {
-//     width: 100%;
-//     position: relative;
-//     z-index: 1;
-//     position: absolute;
-//     top: 50%;
-//     left:50%;
-//     transform: translate(-50%,-50%);
-//   }
-
-
 .cover {
-    //background: #222 url('https://unsplash.it/1920/1080/?random') center center no-repeat;
-    background-color: gray;
-    background-size: cover;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
+  background: #222 url("https://cdn.wallpapersafari.com/0/11/oJNcCs.jpg");
+  background-position: left 500px top 50%;
+  background-size: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .coverCaption {
-    width: 100%;
-    position: relative;
-    z-index: 1;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-/* only used for background overlay not needed for centering */
 form:before {
-    content: '';
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background-color: rgba(0,0,0,0.3);
-    z-index: -1;
-    border-radius: 5px;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px 1px rgba(100, 100, 100, 0.6);
+  z-index: -1;
+  border-radius: 10px;
 }

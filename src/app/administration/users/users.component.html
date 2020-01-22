@@ -1,0 +1,61 @@
+<section class="min-vh-100 cover">
+    <div class="coverCaption">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-md-9 text-white">
+                    <h5 class="mb-3">Manage users</h5>
+                    <div class="table-responsive">
+                        <table class="table" style="background: #EDEDEE; border-radius: 10px;">
+                            <thead>
+                                <tr class="animated fadeIn">
+                                    <th scope="col" style="border: none;">First name</th>
+                                    <th>Last name</th>
+                                    <th>Birthdate</th>
+                                    <th>Email</th>
+                                    <th>Reservations</th>
+                                    <th style="border: none;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="animated fadeIn" *ngFor="let user of users;">
+                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                    <td>{{ user.birthDate | date }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.reservations.length }}</td>
+                                    <td class="text-center">
+                                        <i class="fa fa-arrow-right" (click)="selectUser(user)"
+                                            style="cursor: pointer;"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                <h5 class="mb-3">Reservations <span *ngIf="selectedUser">of {{ selectedUser.lastName }}</span></h5>
+                    <div *ngIf="selectedUser" style="max-height: 700px; overflow: auto;">
+                        <div *ngIf="selectedUser.reservations.length > 0">
+                            <div class="animated fadeIn list-group-item mt-2 reservationCard"
+                                *ngFor="let reservation of selectedUser.reservations">  
+                                <div>Movie: {{ reservation.movieId }}</div>
+                                <div>Reserved seats: {{ reservation.reservedSeats }}</div>
+                                <div>{{ reservation.date }} at {{ reservation.time }}</div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <button style="width: 100%" class="btn btn-sm btn-danger mr-2" (click)="deleteReservation(reservation)">
+                                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    <button style="width: 100%" class="btn btn-sm btn-secondary"><i class="fa fa-pencil"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="selectedUser.reservations.length === 0">
+                            <h6 class="text-white">No reservations</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

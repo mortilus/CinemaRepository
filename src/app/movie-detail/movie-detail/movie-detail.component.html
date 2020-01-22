@@ -1,22 +1,118 @@
-<div *ngIf="selectedMovie" class="row">
-    <div class="col-md-4 text-center" style="padding: 50px;">
-        <div class="d-block mb-4 h-100">
-            <img class="animated fadeIn img-fluid" [src]="selectedMovie.poster" alt="image not found"
-                style="box-shadow: 0 0 60px 1px rgba(100, 100, 100, 0.6);">
+<ng-container *ngIf="selectedMovie">
+    <div class="row">
+        <div class="col-md-4 text-center" style="padding: 50px;">
+            <div class="d-block mb-4 h-100">
+                <img class="animated fadeIn img-fluid" [src]="selectedMovie.poster" alt="image not found"
+                    style="box-shadow: 0 0 60px 1px rgba(100, 100, 100, 0.6);">
+            </div>
+        </div>
+        <div class="col-md-8" style="padding: 50px;">
+            <h2 class="text-white">{{ selectedMovie.title }}</h2>
+            <p class="text-white">{{ selectedMovie.overview }}</p>
+            <br>
+            <div class="text-white d-flex align-items-center">
+                <h5 style="margin: 0px" class="text-white">Director:</h5>
+                <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.director }}</p>
+            </div>
+            <div class="text-white d-flex align-items-center mt-3">
+                <h5 style="margin: 0px" class="text-white">Cast:</h5>
+                <p style="margin: 0px 0px 0px 10px; color: darkgray;" *ngFor="let cast of selectedMovie.cast">
+                    {{ cast }},
+                </p>
+            </div>
+            <div class="text-white d-flex align-items-center mt-3">
+                <h5 style="margin: 0px" class="text-white">Running time:</h5>
+                <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
+            </div>
+
+            <app-booking-system [todayTimes]="todayTimes" [tomorrowTimes]="tomorrowTimes"
+                (selectedTime)="timeSelected($event, bookingModal)"></app-booking-system>
         </div>
     </div>
-    <div class="col-md-8" style="padding: 50px;">
-        <h2 class="text-white">{{ selectedMovie.title }}</h2>
-        <p class="text-white">{{ selectedMovie.overview }}</p>
-        <br>
-        <div class="text-white d-flex align-items-center">
-            <h5 style="margin: 0px" class="text-white">Director:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.director }}</p>
+    <!-- <div class="row"> -->
+    <app-footer></app-footer>
+    <!-- </div> -->
+</ng-container>
+
+<ng-template #bookingModal let-modal>
+    <div class="modal-body">
+        <div class="row pr-3 pl-3 mb-3">
+            <h4 class="modal-title">{{ selectedTime.date | titlecase }} at {{ selectedTime.time }}</h4>
         </div>
-        <div class="text-white d-flex align-items-center mt-3">
-            <h5 style="margin: 0px" class="text-white">Cast:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;" *ngFor="let cast of selectedMovie.cast">{{ cast }},</p>
+        <div class="row">
+            <div class="col-lg-5 col-md-4">
+                <div class="d-flex align-items-center justify-content-center pr-2 pl-2">
+                    <button class="btn customModalButton mr-3" [disabled]="seatsCounter === 0" (click)="removeSeat()">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <h3>{{ seatsCounter }}</h3>
+                    <button class="btn customModalButton ml-3" [disabled]="seatsCounter >= seatObj.available"
+                        (click)="addSeat()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <div class="d-flex justify-content-between align-items-center text-white mt-3 mb-3">
+                    <label>OCCUPIED: {{ seatObj.assigned }}</label>
+                    <label>AVAILABLE: {{ seatObj.available }}</label>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-8 text-white">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 text-left">
+                            <label>First name</label>
+                            <input class="customInputFields form-control" type="text">
+                        </div>
+                        <div class="form-group col-md-6 text-left">
+                            <label>Last name</label>
+                            <input class="customInputFields form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 text-left">
+                            <label>ID Number</label>
+                            <input class="customInputFields form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 text-left">
+                            <a class="text-white" style="text-decoration: underline;" [attr.aria-expanded]="isCollapsed"
+                                (click)="isCollapsed = !isCollapsed">Having the fedelity card?</a>
+                        </div>
+                    </div>
+                    <div class="form-row" id="collapseCardForm" [ngbCollapse]="isCollapsed">
+                        <div class="form-group col-8 text-left animated fadeIn">
+                            <input class="customInputFields form-control" placeholder="Fedelity card number"
+                                type="text">
+                        </div>
+                        <div class="form-group col-4">
+                            <button class="btn customModalButton" style="width: 100%;">validate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="text-white d-flex align-items-center mt-3">
-            <h5 style="margin: 0px" class="text-white">Running time:</h5><p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
+        <!-- <div class="d-flex justify-content-end text-white mb-3">
+            <h5>TOTAL: 10€</h5>
+        </div> -->
+        <div class="row d-flex align-items-center justify-content-end" style="padding: 0px 20px;">
+            <button class="btn btn-primary customModalButton mr-2" (click)="modal.close()">Cancel</button>
+            <button class="btn btn-primary customModalButton" [disabled]="seatsCounter === 0" (click)="book(modal)">
+                <span *ngIf="booking" class="spinner-border spinner-border-sm mr-1"></span>
+                Reserve
+            </button>
         </div>
     </div>
-</div>
+</ng-template>
+
+
+<!-- 
+    <div style="width: 100%;">
+        <a class="text-white" style="text-decoration: underline;" [attr.aria-expanded]="isCollapsed"
+            (click)="isCollapsed = !isCollapsed">Having the fedelity card?</a>
+    </div>
+    <div>
+        <div class="animated fadeIn" id="collapseCardForm" [ngbCollapse]="isCollapsed">
+        </div>
+    </div>
+ -->

@@ -1,4 +1,6 @@
-.homeContainer {
+.footerContainer {
+    padding-right: 50px;
+    padding-left: 50px;
     .imageContainer {
         overflow: hidden;
         cursor: pointer;
@@ -9,18 +11,15 @@
             transform: scale(1.05);
         }
     }
-    .customSearch {
-        width: 25%;
-        background-color: black;
-        margin-left: 15px;
-        margin-bottom: 20px;
-        color: rgb(184, 184, 184);
-    }
 }
 @media only screen and (max-width: 725px) {
-    .homeContainer {
-        .customSearch {
-            width: 95%;
+    .footerContainer {
+        padding-right: 25px;
+        padding-left: 25px;
+        .homeContainer {
+            .customSearch {
+                width: 95%;
+            }
         }
     }
 }
