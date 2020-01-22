@@ -3,6 +3,7 @@ import { AuthService } from './shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ILoggedUser } from './shared/models/IUser';
 import { Subscription } from 'rxjs';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public currentUser: ILoggedUser = null;
 
-  constructor(private _authService: AuthService, private _router: Router) { }
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private _permissionsService: NgxPermissionsService) {
+      if(localStorage.getItem('loggedUser')) {
+        let user = JSON.parse(localStorage.getItem('loggedUser')) || {};
+        this._permissionsService.loadPermissions([user.role]);
+      }
+    }
 
   ngOnInit(): void {
     this._initSubscriptions();

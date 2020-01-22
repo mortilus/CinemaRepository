@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './home/carousel/carousel.component';
 import { SharedModule } from './shared/shared.module';
 import { TokenInterceptor } from './shared/interceptors/tokenInterceptor';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TokenInterceptor } from './shared/interceptors/tokenInterceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxPermissionsModule.forRoot(),
     SharedModule
   ],
   providers: [
