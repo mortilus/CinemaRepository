@@ -7,6 +7,7 @@ import { ISeat } from 'src/app/shared/models/ISeat';
 import { IBooking } from 'src/app/shared/models/IBooking';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BookingService } from 'src/app/shared/services/booking.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-movie-detail',
@@ -25,6 +26,7 @@ export class MovieDetailComponent implements OnInit {
   public seatsCounter: number = 0;
   public seatObj: ISeat = null;
   public booking: boolean = false;
+  public fidelityCardNumber: string = '';
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -32,7 +34,9 @@ export class MovieDetailComponent implements OnInit {
     private _modalService: NgbModal,
     private _authService: AuthService,
     private _bookingService: BookingService,
-    private _router: Router) { }
+    private _router: Router,
+    private _formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this._initMovie();
@@ -69,7 +73,7 @@ export class MovieDetailComponent implements OnInit {
       .subscribe(res => {
         if (res[0])
           this.seatObj = res[0];
-        this._modalService.open(this._modalToOpen, { centered: true, backdrop: 'static' });
+        this._modalService.open(this._modalToOpen, { size: 'lg' });
       });
   }
 
