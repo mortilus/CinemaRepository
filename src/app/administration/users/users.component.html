@@ -29,14 +29,14 @@
     <div class="col-md-4">
         <h5 class="mb-3">Reservations</h5>
         <ng-container *ngIf="selectedUser">
-            <ng-container *ngIf="selectedUser.reservations.length > 0; noReservations">
-                <div class="text-white" style="border: 0.5px solid white;"
+            <div *ngIf="selectedUser.reservations.length > 0; noReservations">
+                <div class="list-group-item mt-2" style="border: 0.5px solid white;"
                     *ngFor="let reservation of selectedUser.reservations">
-                    <div>Movie: {{ reservation.movieId }}</div>
-                    <div>Reserved seats: {{ reservation.reservedSeats }}</div>
-                    <div>{{ reservation.date }} at {{ reservation.time }}</div>
+                    <div style="color: black;">Movie: {{ reservation.movieId }}</div>
+                    <div style="color: black;">Reserved seats: {{ reservation.reservedSeats }}</div>
+                    <div style="color: black;">{{ reservation.date }} at {{ reservation.time }}</div>
                 </div>
-            </ng-container>
+            </div>
             <ng-template #noReservations>
                 <h6>No reservations</h6>
             </ng-template>
