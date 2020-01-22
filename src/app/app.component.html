@@ -18,6 +18,8 @@
             <a class="nav-link">Administration</a>
           </li>
         </ul> -->
+
+        <!-- Only admins can access this page -->
         <div class="nav-item dropdown" *ngxPermissionsOnly="['admin']">
           <button class="btn btn-outline-secondary nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

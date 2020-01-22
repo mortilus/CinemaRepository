@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMovie } from 'src/app/shared/models/IMovie';
 import { ISeat } from 'src/app/shared/models/ISeat';
 import { IBooking } from 'src/app/shared/models/IBooking';
-import { MainService } from 'src/app/shared/services/main.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BookingService } from 'src/app/shared/services/booking.service';
 
@@ -19,6 +18,7 @@ export class MovieDetailComponent implements OnInit {
   public todayTimes: string[] = [];
   public tomorrowTimes: string[] = [];
   public selectedTime: { date: string, time: string } = null;
+  public isCollapsed: boolean = true;
 
   //Modal variables
   private _modalToOpen: any = null;
