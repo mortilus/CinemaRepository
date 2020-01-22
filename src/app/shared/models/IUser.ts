@@ -5,8 +5,18 @@ export interface IUser {
     birthDate: string,
     email: string,
     password: string,
-    role: string
+    role: string,
+    reservations?: IReservation[]
 }
+export interface IReservation {
+    userId: number,
+    movieId: number,
+    reservedSeats: number,
+    date: string,
+    time: string,
+    id: number
+}
+
 export interface ILoggedUser {
     id: number,
     firstName: string,

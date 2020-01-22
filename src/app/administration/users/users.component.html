@@ -1,1 +1,45 @@
-<p>administration users works!</p>
+<div class="p-4 row text-white">
+    <div class="col-md-8">
+        <h5 class="mb-3">Manage users</h5>
+        <table class="table table-bordered table-dark" style="background: none;">
+            <thead>
+                <tr>
+                    <th scope="col">First name</th>
+                    <th>Last name</th>
+                    <th>Birthdate</th>
+                    <th>Email</th>
+                    <th>Reservations</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users;">
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.birthDate | date }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.reservations.length }}</td>
+                    <td>
+                        <i class="fa fa-arrow-right" (click)="selectUser(user)" style="cursor: pointer;"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <h5 class="mb-3">Reservations</h5>
+        <ng-container *ngIf="selectedUser">
+            <ng-container *ngIf="selectedUser.reservations.length > 0; noReservations">
+                <div class="text-white" style="border: 0.5px solid white;"
+                    *ngFor="let reservation of selectedUser.reservations">
+                    <div>Movie: {{ reservation.movieId }}</div>
+                    <div>Reserved seats: {{ reservation.reservedSeats }}</div>
+                    <div>{{ reservation.date }} at {{ reservation.time }}</div>
+                </div>
+            </ng-container>
+            <ng-template #noReservations>
+                <h6>No reservations</h6>
+            </ng-template>
+        </ng-container>
+    </div>
+</div>
