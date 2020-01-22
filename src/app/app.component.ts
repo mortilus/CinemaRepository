@@ -40,6 +40,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this._router.navigate(['/login']);
   }
 
+  goToAdministrationUsers() {
+    this._router.navigate(['/administration/users']);
+  }
+
   ngOnDestroy(): void {
     this._subscriptions.forEach(sub => sub.unsubscribe());
   }

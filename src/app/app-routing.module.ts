@@ -10,18 +10,23 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 const routes: Routes = [
   {
     path: 'home', component: HomeComponent,
-    canActivate: [AuthGuard, NgxPermissionsGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
     path: 'home/movies',
     loadChildren: () => import('./movie-detail/movie-detail.module').then(m => m.MovieDetailModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'administration',
+    loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule),
     canActivate: [AuthGuard, NgxPermissionsGuard],
     data: {
       permissions: {
         only: ['admin'],
-        redirectTo: '/login'
+        redirectTo: '/home'
       }
     }
   },
