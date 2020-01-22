@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MainService } from 'src/app/shared/services/main.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IUser, IReservation } from 'src/app/shared/models/IUser';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-users',
@@ -45,7 +41,7 @@ export class UsersComponent implements OnInit {
       .subscribe(users => this.users = users);
   }
 
-  public selectUser(user: IUser) { //User was selected
+  public selectUser(user: IUser) { //When user is selected from the table
     this.selectedUserForm = this._formBuilder.group({
       firstName: [user.firstName],
       lastName: [user.lastName],
@@ -69,11 +65,7 @@ export class UsersComponent implements OnInit {
   public getUpdatedUser(id: number) { //Needed to update the single user in the users list
     this._usersService.getUserById(id)
       .subscribe(user => {
-        const indexOldUser = this.users.indexOf(this.selectedUser);
-        if (indexOldUser != -1) {
-          this.selectUser(user); //Update selecteduser + form
-          this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
-        }
+        this._updateUI(user);
       });
   }
 
@@ -91,14 +83,18 @@ export class UsersComponent implements OnInit {
     }
     this._usersService.saveUserModifications(modifiedUser)
       .subscribe(res => {
-        const indexOldUser = this.users.indexOf(this.selectedUser);
-        if (indexOldUser != -1) {
-          this.selectUser(modifiedUser); //Update selecteduser + form
-          this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
-        }
+        this._updateUI(modifiedUser);
       });
   }
   public resetSelectedUserForm() {
     this.selectUser(this.selectedUser);
+  }
+
+  private _updateUI(user: IUser) {
+    const indexOldUser = this.users.indexOf(this.selectedUser);
+        if (indexOldUser != -1) {
+          this.selectUser(user); //Update selecteduser + form
+          this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
+        }
   }
 }

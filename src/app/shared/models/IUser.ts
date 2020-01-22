@@ -6,7 +6,8 @@ export interface IUser {
     email: string,
     password: string,
     role: string,
-    reservations?: IReservation[]
+    reservations?: IReservation[],
+    fedelitycards?: IFedelityCard
 }
 export interface IReservation {
     userId: number,
@@ -33,4 +34,9 @@ export interface IRegisterUser {
     email: string,
     password: string,
     role: string
+}
+export interface IFedelityCard {
+    id: number,
+    userId: number,
+    code: string
 }
