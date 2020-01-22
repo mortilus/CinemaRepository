@@ -22,7 +22,12 @@ export class UsersService {
   }
 
   getUserById(id: number) {
-    var url = `${this._url}/users/${id}?_embed=reservations`;
+    const url = `${this._url}/users/${id}?_embed=reservations`;
     return this._http.get<IUser>(url);
+  }
+
+  saveUserModifications(modifiedUser: IUser) {
+    const url = `${this._url}/users/${modifiedUser.id}`;
+    return this._http.patch(url, modifiedUser);
   }
 }

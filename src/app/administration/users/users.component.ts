@@ -6,6 +6,7 @@ import { IUser, IReservation } from 'src/app/shared/models/IUser';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-users',
@@ -78,7 +79,24 @@ export class UsersComponent implements OnInit {
 
   //Selected user form
   public saveUserChanges() {
-
+    const modifiedUser: IUser = {
+      firstName: this.selectedUserForm.get('firstName').value,
+      lastName: this.selectedUserForm.get('lastName').value,
+      email: this.selectedUserForm.get('email').value,
+      birthDate: this.selectedUserForm.get('birthDate').value,
+      password: this.selectedUserForm.get('password').value,
+      id: this.selectedUser.id,
+      role: this.selectedUser.role,
+      reservations: this.selectedUser.reservations
+    }
+    this._usersService.saveUserModifications(modifiedUser)
+      .subscribe(res => {
+        const indexOldUser = this.users.indexOf(this.selectedUser);
+        if (indexOldUser != -1) {
+          this.selectUser(modifiedUser); //Update selecteduser + form
+          this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
+        }
+      });
   }
   public resetSelectedUserForm() {
     this.selectUser(this.selectedUser);
