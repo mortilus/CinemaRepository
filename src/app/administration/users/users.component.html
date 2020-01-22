@@ -58,26 +58,26 @@
                     </div>
                 </div>
             </div>
-            <div class="row ml-1 mt-3 mr-1">
+            <div class="row ml-1 mt-3 mr-1" *ngIf="selectedUser">
                 <div class="card animated fadeIn" style="width: 100%;">
                     <div class="card-body" style="background-color: #EDEDEE;">
-                        <form>
+                        <form [formGroup]="selectedUserForm" (ngSubmit)="saveUserChanges()">
                             <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>First name</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" formControlName="firstName">
                                     <!-- formControlName="firstName"
                                         [ngClass]="{ 'is-invalid': submitted && formControls.firstName.errors }" -->
                                 </div>
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Last name</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" formControlName="lastName">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Birth date</label>
                                     <div class="d-flex align-items-center">
                                         <input class="form-control" placeholder="dd-mm-yyyy" name="dp" ngbDatepicker
-                                            #d="ngbDatepicker">
+                                            #d="ngbDatepicker" formControlName="birthDate">
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary fa fa-calendar"
                                                 style="color: white;" (click)="d.toggle()" type="button"></button>
@@ -88,20 +88,20 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Email</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" formControlName="email">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Password</label>
-                                    <input class="form-control" type="password">
+                                    <input class="form-control" type="password" formControlName="password">
                                 </div>
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Fedelity card number</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" formControlName="fedelityCardNumber">
                                 </div>
                             </div>
                             <div class="float-right">
-                                <button class="btn btn-secondary mr-2">Reset</button>
-                                <button class="btn btn-danger">Save</button>
+                                <button class="btn btn-secondary mr-2" type="button" (click)="resetSelectedUserForm()">Reset</button>
+                                <button class="btn btn-danger" type="submit">Save</button>
                             </div>
                         </form>
                     </div>
