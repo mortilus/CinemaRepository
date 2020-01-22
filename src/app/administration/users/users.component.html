@@ -1,36 +1,38 @@
 <div class="p-4 row">
     <div class="col-md-8 text-white">
         <h5 class="mb-3">Manage users</h5>
-        <table class="table table-bordered table-dark" style="background: none;">
-            <thead>
-                <tr>
-                    <th scope="col">First name</th>
-                    <th>Last name</th>
-                    <th>Birthdate</th>
-                    <th>Email</th>
-                    <th>Reservations</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of users;">
-                    <td>{{ user.firstName }}</td>
-                    <td>{{ user.lastName }}</td>
-                    <td>{{ user.birthDate | date }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.reservations.length }}</td>
-                    <td>
-                        <i class="fa fa-arrow-right" (click)="selectUser(user)" style="cursor: pointer;"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-dark" style="background: none; border-radius: 10px;">
+                <thead>
+                    <tr>
+                        <th scope="col">First name</th>
+                        <th>Last name</th>
+                        <th>Birthdate</th>
+                        <th>Email</th>
+                        <th>Reservations</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users;">
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.birthDate | date }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.reservations.length }}</td>
+                        <td>
+                            <i class="fa fa-arrow-right" (click)="selectUser(user)" style="cursor: pointer;"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="col-md-4">
         <h5 class="mb-3 text-white">Reservations</h5>
         <ng-container *ngIf="selectedUser">
             <div *ngIf="selectedUser.reservations.length > 0; noReservations">
-                <div class="list-group-item mt-2" style="border: 0.5px solid white;"
+                <div class="animated fadeIn list-group-item mt-2" style="border: 0.5px solid white;"
                     *ngFor="let reservation of selectedUser.reservations">
                     <div>Movie: {{ reservation.movieId }}</div>
                     <div>Reserved seats: {{ reservation.reservedSeats }}</div>
