@@ -16,8 +16,13 @@ export class UsersService {
 
   getUsers(embedReservations: boolean) {
     var url = `${this._url}/users`;
-    if(embedReservations)
+    if (embedReservations)
       url = `${url}?_embed=reservations`;
     return this._http.get<IUser[]>(url);
+  }
+
+  getUserById(id: number) {
+    var url = `${this._url}/users/${id}?_embed=reservations`;
+    return this._http.get<IUser>(url);
   }
 }

@@ -30,18 +30,20 @@ export class UsersComponent implements OnInit {
 
   public selectUser(user: IUser) {
     this.selectedUser = user;
-    // console.log("USER: " + JSON.stringify(user));
-    // this.userReservations = user.reservations;
-    // debugger;
-    // console.log("Selected user: " + JSON.stringify(this.selectUser));
+  }
+
+  public getUpdatedUser(id: number) {
+    this._usersService.getUserById(id)
+      .subscribe(user => {
+        this.selectedUser = user;
+      });
   }
 
   public deleteReservation(reservation: IReservation) {
     this.loading = true;
     this._reservationService.removeReservation(reservation.id)
       .subscribe(res => {
-        // this.selectedUser = null;
-        this.selectUser(this.selectedUser);
+        this.getUpdatedUser(this.selectedUser.id);
         this._initUsers();
         this.loading = false;
       });
