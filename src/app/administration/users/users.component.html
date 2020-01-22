@@ -3,7 +3,14 @@
         <div class="container">
             <div class="row mt-4">
                 <div class="col-md-9 text-white">
-                    <h5 class="mb-3">Manage users</h5>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-3">Manage users</h5>
+                        <button class="btn btn-secondary btn-sm mb-3"
+                            (click)="openBookingSettingsModal(bookingSettingsModal)">
+                            <i class="fa fa-cog"></i>
+                            Booking settings
+                        </button>
+                    </div>
                     <div class="table-responsive" style="max-height: 600px; overflow: auto;">
                         <table class="table" style="background: #EDEDEE; border-radius: 10px;">
                             <thead>
@@ -47,7 +54,8 @@
                                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                         <i class="fa fa-trash"></i>
                                     </button>
-                                    <button style="width: 100%" class="btn btn-sm btn-secondary"><i
+                                    <button style="width: 100%" class="btn btn-sm btn-secondary"
+                                        (click)="modifyUserReservation(reservation)"><i
                                             class="fa fa-pencil"></i></button>
                                 </div>
                             </div>
@@ -66,8 +74,6 @@
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>First name</label>
                                     <input class="form-control" type="text" formControlName="firstName">
-                                    <!-- formControlName="firstName"
-                                        [ngClass]="{ 'is-invalid': submitted && formControls.firstName.errors }" -->
                                 </div>
                                 <div class="form-group col-md-6 col-lg-4 text-left">
                                     <label>Last name</label>
@@ -93,7 +99,8 @@
                                 </div>
                             </div>
                             <div class="float-right">
-                                <button class="btn btn-secondary mr-2" type="button" (click)="resetSelectedUserForm()">Reset</button>
+                                <button class="btn btn-secondary mr-2" type="button"
+                                    (click)="resetSelectedUserForm()">Reset</button>
                                 <button class="btn btn-danger" type="submit">Save</button>
                             </div>
                         </form>
@@ -103,3 +110,29 @@
         </div>
     </div>
 </section>
+
+<ng-template let-modal #bookingSettingsModal>
+    <div class="modal-header">
+        <h5 style="color: black;">Booking settings</h5>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="bookingSettingsForm" (ngSubmit)="saveBookingSettings(modal)">
+            <div class="form-group text-left">
+                <label>Maximum number of places that can be booked</label>
+                <input class="form-control" type="number" formControlName="maxAmountBooking">
+            </div>
+            <div class="form-group text-left">
+                <label>Price per ticket</label>
+                <div class="d-flex align-items-center justify-content-between">
+                    <input class="form-control mr-2" formControlName="pricePerTicket" type="number"><span>€</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="modal.close()">Cancel</button>
+        <button class="btn btn-danger" (click)="saveBookingSettings(modal)">
+            <span *ngIf="loadingBookingSettings" class="spinner-border spinner-border-sm mr-1"></span>
+            Save</button>
+    </div>
+</ng-template>

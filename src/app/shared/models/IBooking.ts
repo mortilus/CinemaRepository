@@ -5,3 +5,8 @@ export interface IBooking {
     date: string,
     time: string
 }
+
+export interface IBookingSettings {
+    maximumAmountBookings: number,
+    pricePerTicket: number
+}

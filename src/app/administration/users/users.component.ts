@@ -3,6 +3,9 @@ import { IUser, IReservation } from 'src/app/shared/models/IUser';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BookingService } from 'src/app/shared/services/booking.service';
+import { IBookingSettings } from 'src/app/shared/models/IBooking';
 
 @Component({
   selector: 'app-users',
@@ -14,14 +17,17 @@ export class UsersComponent implements OnInit {
   public userReservations: IReservation[] = [];
   public selectedUser: IUser = null;
   public loading: boolean = false;
+  public loadingBookingSettings: boolean = false;
 
-  //Selected user form
   selectedUserForm: FormGroup;
+  bookingSettingsForm: FormGroup;
 
   constructor(
     private _usersService: UsersService,
     private _reservationService: ReservationService,
-    private _formBuilder: FormBuilder) {
+    private _formBuilder: FormBuilder,
+    private _modalService: NgbModal,
+    private _bookingService: BookingService) {
     this.selectedUserForm = this._formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -29,6 +35,10 @@ export class UsersComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       fedelityCardNumber: ['', Validators.required]
+    });
+    this.bookingSettingsForm = this._formBuilder.group({
+      maxAmountBooking: ['', Validators.required],
+      pricePerTicket: ['', Validators.required]
     });
   }
 
@@ -48,11 +58,12 @@ export class UsersComponent implements OnInit {
       birthDate: [user.birthDate],
       email: [user.email],
       password: [user.password],
-      fedelityCardNumber: ['vuoto']
+      fedelityCardNumber: ['']
     });
     this.selectedUser = user;
   }
 
+  //Reservation actions
   public deleteReservation(reservation: IReservation) {
     this.loading = true;
     this._reservationService.removeReservation(reservation.id)
@@ -60,6 +71,9 @@ export class UsersComponent implements OnInit {
         this.getUpdatedUser(this.selectedUser.id);
         this.loading = false;
       });
+  }
+  public modifyUserReservation(reservation: IReservation) {
+    //Open modal with form to modify current reservation
   }
 
   public getUpdatedUser(id: number) { //Needed to update the single user in the users list
@@ -92,9 +106,33 @@ export class UsersComponent implements OnInit {
 
   private _updateUI(user: IUser) {
     const indexOldUser = this.users.indexOf(this.selectedUser);
-        if (indexOldUser != -1) {
-          this.selectUser(user); //Update selecteduser + form
-          this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
-        }
+    if (indexOldUser != -1) {
+      this.selectUser(user); //Update selecteduser + form
+      this.users[indexOldUser] = this.selectedUser; //Update user with changes locally in the users list to update UI
+    }
+  }
+
+  //Booking settings UI
+  openBookingSettingsModal(modal: any) {
+    this._bookingService.getBookingSettings()
+      .subscribe(res => {
+        this.bookingSettingsForm = this._formBuilder.group({
+          maxAmountBooking: [res.maximumAmountBookings, Validators.required],
+          pricePerTicket: [res.pricePerTicket, Validators.required]
+        });
+        this._modalService.open(modal, { centered: false, backdrop: 'static' });
+      });
+  }
+  saveBookingSettings(modal: any) {
+    this.loadingBookingSettings = true;
+    const modifiedBookingSettings: IBookingSettings = {
+      maximumAmountBookings: this.bookingSettingsForm.get('maxAmountBooking').value,
+      pricePerTicket: this.bookingSettingsForm.get('pricePerTicket').value
+    };
+    this._bookingService.updateBookingSettings(modifiedBookingSettings)
+      .subscribe(res => {
+        this.loadingBookingSettings = false;
+        modal.close();
+      });
   }
 }
