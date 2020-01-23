@@ -23,6 +23,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public loading: boolean = false;
   public loadingBookingSettings: boolean = false;
   public searchedUser: string = '';
+  public loadingUserModifications: boolean = false;
 
   selectedUserForm: FormGroup;
   bookingSettingsForm: FormGroup;
@@ -90,6 +91,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   //Selected user form
   public saveUserChanges() {
+    this.loadingUserModifications = true;
     const modifiedUser: IUser = {
       firstName: this.selectedUserForm.get('firstName').value,
       lastName: this.selectedUserForm.get('lastName').value,
@@ -103,6 +105,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this._usersService.saveUserModifications(modifiedUser)
       .subscribe(res => {
         this._updateUI(modifiedUser);
+        this.loadingUserModifications = false;
       });
   }
   public resetSelectedUserForm() {

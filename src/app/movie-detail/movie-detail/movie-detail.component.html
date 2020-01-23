@@ -46,32 +46,40 @@
                         <i class="fa fa-minus"></i>
                     </button>
                     <h3>{{ seatsCounter }}</h3>
-                    <button class="btn customModalButton ml-3" [disabled]="seatsCounter >= seatObj.available"
-                        (click)="addSeat()">
+                    <button class="btn customModalButton ml-3" [disabled]="plusButtonDisabled()" (click)="addSeat()">
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
-                <div class="text-white mt-3 mb-3">
-                    <label>OCCUPIED: {{ seatObj.assigned }}</label>
-                    <label>AVAILABLE: {{ seatObj.available }}</label>
+                <div class="text-white mt-3 mb-3"
+                    style="border: 0.5px solid lightgray; border-radius: 10px; padding: 25px 0px;">
+                    <div class="row d-flex justify-content-center"><span class="mr-2">OCCUPIED:</span>
+                        {{ seatObj.assigned }}</div>
+                    <div class="row d-flex justify-content-center"><span class="mr-2">AVAILABLE:</span>
+                        {{ seatObj.available }}</div>
                 </div>
+                <label class="text-white" style="font-size: 12px;">* maximum amount of seats that can be reserved:
+                    {{ bookingSettings.maximumAmountBookings }}</label>
             </div>
             <div class="col-lg-7 col-md-8 text-white">
-                <form>
+                <form [formGroup]="bookingForm">
                     <div class="form-row">
                         <div class="form-group col-md-6 text-left">
                             <label>First name</label>
-                            <input class="customInputFields form-control" type="text">
+                            <input class="customInputFields form-control" formControlName="firstName" type="text">
                         </div>
                         <div class="form-group col-md-6 text-left">
                             <label>Last name</label>
-                            <input class="customInputFields form-control" type="text">
+                            <input class="customInputFields form-control" formControlName="lastName" type="text">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-12 text-left">
+                        <div class="form-group col-md-6 text-left">
+                            <label>Birth date</label>
+                            <input class="customInputFields form-control" formControlName="birthDate" type="text">
+                        </div>
+                        <div class="form-group col-md-6 text-left">
                             <label>ID Number</label>
-                            <input class="customInputFields form-control" type="text">
+                            <input class="customInputFields form-control" formControlName="idNumber" type="text">
                         </div>
                     </div>
                     <div class="form-row">
@@ -97,7 +105,7 @@
         </div> -->
         <div class="row d-flex align-items-center justify-content-end" style="padding: 0px 20px;">
             <button class="btn btn-primary customModalButton mr-2" (click)="modal.close()">Cancel</button>
-            <button class="btn btn-primary customModalButton" [disabled]="seatsCounter === 0" (click)="book(modal)">
+            <button class="btn btn-primary customModalButton" [disabled]="((seatsCounter === 0) || (bookingForm.invalid))" (click)="book(modal)">
                 <span *ngIf="booking" class="spinner-border spinner-border-sm mr-1"></span>
                 Reserve
             </button>
