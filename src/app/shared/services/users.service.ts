@@ -14,10 +14,15 @@ export class UsersService {
     this._url = this._mainService.getMainUrl();
   }
 
-  getUsers(embedReservations: boolean) {
+  getUsers(embedReservations: boolean, searchedUser: string) {
     var url = `${this._url}/users`;
-    if (embedReservations)
+    if (embedReservations && searchedUser && searchedUser != '') {
+      url = `${url}?_embed=reservations&email_like=${searchedUser}`;
+    } else if(embedReservations){
       url = `${url}?_embed=reservations`;
+    } else if(searchedUser && searchedUser != '') {
+      url = `${url}?email_like=${searchedUser}`;
+    }
     return this._http.get<IUser[]>(url);
   }
 

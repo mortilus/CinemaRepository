@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IUser, IReservation } from 'src/app/shared/models/IUser';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
@@ -6,18 +6,23 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { IBookingSettings } from 'src/app/shared/models/IBooking';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
+  @ViewChild('searchedUserId', { static: true }) userFilter: ElementRef;
+
   public users: IUser[] = [];
   public userReservations: IReservation[] = [];
   public selectedUser: IUser = null;
   public loading: boolean = false;
   public loadingBookingSettings: boolean = false;
+  public searchedUser: string = '';
 
   selectedUserForm: FormGroup;
   bookingSettingsForm: FormGroup;
@@ -47,7 +52,7 @@ export class UsersComponent implements OnInit {
   }
 
   private _initUsers() {
-    this._usersService.getUsers(true) //Embed reservations = true
+    this._usersService.getUsers(true, this.searchedUser) //Embed reservations = true
       .subscribe(users => this.users = users);
   }
 
@@ -134,5 +139,16 @@ export class UsersComponent implements OnInit {
         this.loadingBookingSettings = false;
         modal.close();
       });
+  }
+
+  ngAfterViewInit(): void {
+    fromEvent(this.userFilter.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged()
+      ).subscribe(res => {
+        this.selectedUser = null;
+        this._initUsers();
+      })
   }
 }

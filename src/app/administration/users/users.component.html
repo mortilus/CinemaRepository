@@ -11,32 +11,37 @@
                             Booking settings
                         </button>
                     </div>
-                    <div class="table-responsive" style="max-height: 600px; overflow: auto;">
-                        <table class="table" style="background: #EDEDEE; border-radius: 10px;">
-                            <thead>
-                                <tr class="animated fadeIn">
-                                    <th scope="col" style="border: none;">First name</th>
-                                    <th>Last name</th>
-                                    <th>Birthdate</th>
-                                    <th>Email</th>
-                                    <th>Reservations</th>
-                                    <th style="border: none;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="animated fadeIn" *ngFor="let user of users;">
-                                    <td>{{ user.firstName }}</td>
-                                    <td>{{ user.lastName }}</td>
-                                    <td>{{ user.birthDate | date }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>{{ user.reservations.length }}</td>
-                                    <td class="text-center">
-                                        <i class="fa fa-arrow-right" (click)="selectUser(user)"
-                                            style="cursor: pointer;"></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card">
+                        <div class="card-body" style="background-color: #EDEDEE; border-radius: 20px;">
+                            <input class="form-control mb-2" placeholder="search user" [(ngModel)]="searchedUser" #searchedUserId>
+                            <div class="table-responsive" style="max-height: 600px; overflow: auto;">
+                                <table class="table" style="background: #EDEDEE; border-radius: 10px;">
+                                    <thead>
+                                        <tr class="animated fadeIn">
+                                            <th scope="col" style="border: none;">First name</th>
+                                            <th>Last name</th>
+                                            <th>Birthdate</th>
+                                            <th>Email</th>
+                                            <th>Reservations</th>
+                                            <th style="border: none;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="animated fadeIn" *ngFor="let user of users;">
+                                            <td>{{ user.firstName }}</td>
+                                            <td>{{ user.lastName }}</td>
+                                            <td>{{ user.birthDate | date }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.reservations.length }}</td>
+                                            <td class="text-center">
+                                                <i class="fa fa-arrow-right" (click)="selectUser(user)"
+                                                    style="cursor: pointer;"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -113,24 +118,25 @@
 
 <ng-template let-modal #bookingSettingsModal>
     <div class="modal-header">
-        <h5 style="color: black;">Booking settings</h5>
+        <h5>Booking settings</h5>
     </div>
     <div class="modal-body">
         <form [formGroup]="bookingSettingsForm" (ngSubmit)="saveBookingSettings(modal)">
             <div class="form-group text-left">
-                <label>Maximum number of places that can be booked</label>
-                <input class="form-control" type="number" formControlName="maxAmountBooking">
+                <label class="text-white">Maximum number of places that can be booked</label>
+                <input class="customInputFields form-control" type="number" formControlName="maxAmountBooking">
             </div>
             <div class="form-group text-left">
-                <label>Price per ticket</label>
+                <label class="text-white">Price per ticket</label>
                 <div class="d-flex align-items-center justify-content-between">
-                    <input class="form-control mr-2" formControlName="pricePerTicket" type="number"><span>€</span>
+                    <input class="customInputFields form-control mr-2" formControlName="pricePerTicket"
+                        type="number"><span class="text-white">€</span>
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="modal.close()">Cancel</button>
+        <button class="btn customModalButton" (click)="modal.close()">Cancel</button>
         <button class="btn btn-danger" (click)="saveBookingSettings(modal)">
             <span *ngIf="loadingBookingSettings" class="spinner-border spinner-border-sm mr-1"></span>
             Save</button>
