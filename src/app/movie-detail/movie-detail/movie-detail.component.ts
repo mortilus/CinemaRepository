@@ -38,13 +38,13 @@ export class MovieDetailComponent implements OnInit {
     private _bookingService: BookingService,
     private _router: Router,
     private _formBuilder: FormBuilder) {
-      this.bookingForm = this._formBuilder.group({
-        firstName: [this._authService.curentLoggedUserValue.firstName, Validators.required],
-        lastName:[this._authService.curentLoggedUserValue.lastName, Validators.required],
-        birthDate: [this._authService.curentLoggedUserValue.birthDate, Validators.required],
-        idNumber: ['', Validators.required],
-        fedelityCardNumber: ['']
-      });
+    this.bookingForm = this._formBuilder.group({
+      firstName: [this._authService.curentLoggedUserValue.firstName, Validators.required],
+      lastName: [this._authService.curentLoggedUserValue.lastName, Validators.required],
+      birthDate: [this._authService.curentLoggedUserValue.birthDate, Validators.required],
+      idNumber: ['', Validators.required],
+      fedelityCardNumber: ['']
+    });
   }
 
   ngOnInit() {
@@ -53,12 +53,13 @@ export class MovieDetailComponent implements OnInit {
   }
 
   private _initMovie() {
+    this.todayTimes = [];
+    this.tomorrowTimes = [];
     this._activatedRoute.paramMap.subscribe(param => {
       if (this._activatedRoute.snapshot.params.id) {
         this._moviesService.getMovieById(this._activatedRoute.snapshot.params.id)
           .subscribe(res => {
-            if (res)
-              this.selectedMovie = res;
+            this.selectedMovie = res;
             res.showtimes.map(item => {
               item.showtimes.map(time => {
                 if (time.date === 'today') {
@@ -121,9 +122,9 @@ export class MovieDetailComponent implements OnInit {
   }
 
   plusButtonDisabled(): boolean {
-    if(this.seatsCounter >= this.bookingSettings.maximumAmountBookings) {
+    if (this.seatsCounter >= this.bookingSettings.maximumAmountBookings) {
       return true;
-    } else if(this.seatsCounter >= this.seatObj.available) {
+    } else if (this.seatsCounter >= this.seatObj.available) {
       return true;
     }
     return false;

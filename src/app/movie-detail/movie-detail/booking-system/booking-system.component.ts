@@ -16,6 +16,16 @@ export class BookingSystemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this._initLists();
+  }
+
+  ngOnChanges() {
+    this._initLists();
+  }
+
+  private _initLists() {
+    this.todayList = [];
+    this.tomorrowList = [];
     this.todayTimes.map(time => this.todayList.push({ selected: false, time: time }));
     this.tomorrowTimes.map(time => this.tomorrowList.push({ selected: false, time: time }));
   }
@@ -59,7 +69,7 @@ export class BookingSystemComponent implements OnInit {
       ticketTime = { date: 'tommorow', time: tomorrowListSelected[0].time };
     }
 
-    if(ticketTime)
+    if (ticketTime)
       this.selectedTime.emit(ticketTime);
   }
 }

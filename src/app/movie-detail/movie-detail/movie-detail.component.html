@@ -25,7 +25,7 @@
                 <p style="margin: 0px 0px 0px 10px; color: darkgray;">{{ selectedMovie.runtime }} minutes</p>
             </div>
 
-            <app-booking-system [todayTimes]="todayTimes" [tomorrowTimes]="tomorrowTimes"
+            <app-booking-system *ngIf="todayTimes" [todayTimes]="todayTimes" [tomorrowTimes]="tomorrowTimes"
                 (selectedTime)="timeSelected($event, bookingModal)"></app-booking-system>
         </div>
     </div>

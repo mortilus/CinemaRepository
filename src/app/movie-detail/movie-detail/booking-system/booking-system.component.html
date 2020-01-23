@@ -2,14 +2,14 @@
     <ngb-tabset [destroyOnHide]="false">
         <ngb-tab title="Today">
             <ng-template ngbTabContent>
-                <div *ngIf="todayTimes.length > 0; else noTimes" style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
+                <div *ngIf="todayTimes && todayTimes.length > 0; else noTimes" style="flex-wrap: wrap;" class="d-flex justify-content-start align-items-center p-2">
                     <button *ngFor="let time of todayList" class="btn customTimeButton mr-2 mt-2" [ngClass]="{'selected': time.selected}" (click)="select(true, time)">{{ time.time }}</button>
                 </div>
             </ng-template>
         </ngb-tab>
         <ngb-tab title="Tomorrow">
             <ng-template ngbTabContent>
-                <div *ngIf="tomorrowTimes.length > 0; else noTimes" style="flex-wrap: wrap;"
+                <div *ngIf="tomorrowTimes && tomorrowTimes.length > 0; else noTimes" style="flex-wrap: wrap;"
                     class="d-flex justify-content-start align-items-center p-2">
                     <button *ngFor="let time of tomorrowList"
                         class="btn customTimeButton mr-2 mt-2" [ngClass]="{'selected': time.selected}" (click)="select(false, time)">{{ time.time }}</button>

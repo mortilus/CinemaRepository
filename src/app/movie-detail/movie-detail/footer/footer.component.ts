@@ -19,7 +19,7 @@ export class FooterComponent implements OnInit {
   }
 
   showMovieDetails(movieId: number) {
-      this._router.navigate(['/home/movies/' + movieId]);
+      this._router.navigate(['/home/movies/' + movieId]); 
   }
 
 }
