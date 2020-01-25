@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMovie } from 'src/app/shared/models/IMovie';
 import { ISeat } from 'src/app/shared/models/ISeat';
-import { IBooking, IBookingSettings } from 'src/app/shared/models/IBooking';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { IBookingSettings } from 'src/app/shared/models/IBooking';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BookingModalComponent } from './booking-modal/booking-modal.component';
 
 @Component({
@@ -23,29 +21,16 @@ export class MovieDetailComponent implements OnInit {
   public isCollapsed: boolean = true;
 
   //Booking modal variables
-  private _modalToOpen: any = null;
-  public seatsCounter: number = 0;
   public seatObj: ISeat = null;
   public booking: boolean = false;
   public fidelityCardNumber: string = '';
   public bookingSettings: IBookingSettings = null;
-  public bookingForm: FormGroup;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _moviesService: MoviesService,
     private _modalService: NgbModal,
-    private _authService: AuthService,
-    private _bookingService: BookingService,
-    private _router: Router,
-    private _formBuilder: FormBuilder) {
-    this.bookingForm = this._formBuilder.group({
-      firstName: [this._authService.curentLoggedUserValue.firstName, Validators.required],
-      lastName: [this._authService.curentLoggedUserValue.lastName, Validators.required],
-      birthDate: [this._authService.curentLoggedUserValue.birthDate, Validators.required],
-      idNumber: ['', Validators.required],
-      fedelityCardNumber: ['']
-    });
+    private _bookingService: BookingService) {
   }
 
   ngOnInit() {
@@ -81,9 +66,8 @@ export class MovieDetailComponent implements OnInit {
       });
   }
 
-  public timeSelected(time: { date: string, time: string }, modal: any) {
+  public timeSelected(time: { date: string, time: string }) {
     this.selectedTime = time;
-    this._modalToOpen = modal;
     this._getMovieSeats();
   }
   private _getMovieSeats() {
@@ -98,43 +82,4 @@ export class MovieDetailComponent implements OnInit {
         modalRef.componentInstance.bookingSettings = this.bookingSettings;
       });
   }
-
-  //DELETE
-  public addSeat() {
-    this.seatsCounter++;
-  }
-  public removeSeat() {
-    this.seatsCounter--;
-  }
-
-  get bookinFormControls() { return this.bookingForm.controls }
-
-  //DELETE
-  public book(modal: any) {
-    this.booking = true;
-    const reservation: IBooking = {
-      userId: this._authService.curentLoggedUserValue.id,
-      movieId: this.selectedMovie.id,
-      reservedSeats: this.seatsCounter,
-      date: this.selectedTime.date,
-      time: this.selectedTime.time
-    }
-    this._bookingService.bookMovieTickets(reservation)
-      .subscribe(res => {
-        this.seatsCounter = 0;
-        this.booking = false;
-        modal.close();
-        this._router.navigate(['/home']);
-      })
-  }
-
-  plusButtonDisabled(): boolean {
-    if (this.seatsCounter >= this.bookingSettings.maximumAmountBookings) {
-      return true;
-    } else if (this.seatsCounter >= this.seatObj.available) {
-      return true;
-    }
-    return false;
-  }
-
 }

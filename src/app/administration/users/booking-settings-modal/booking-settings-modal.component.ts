@@ -13,7 +13,12 @@ export class BookingSettingsModalComponent implements OnInit {
   public bookingSettingsForm: FormGroup;
   public loadingBookingSettings: boolean = false;
 
-  constructor(private _bookingService: BookingService, public activeModal: NgbActiveModal, private _formBuilder: FormBuilder) { }
+  constructor(private _bookingService: BookingService, public activeModal: NgbActiveModal, private _formBuilder: FormBuilder) {
+    this.bookingSettingsForm = this._formBuilder.group({
+      maxAmountBooking: [0, Validators.required],
+      pricePerTicket: [0, Validators.required]
+    });
+  }
 
   ngOnInit() {
     this._bookingService.getBookingSettings()
