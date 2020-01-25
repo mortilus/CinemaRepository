@@ -29,9 +29,7 @@
                 (selectedTime)="timeSelected($event, bookingModal)"></app-booking-system>
         </div>
     </div>
-    <!-- <div class="row"> -->
     <app-footer></app-footer>
-    <!-- </div> -->
 </ng-container>
 
 <ng-template #bookingModal let-modal>
@@ -100,27 +98,13 @@
                 </form>
             </div>
         </div>
-        <!-- <div class="d-flex justify-content-end text-white mb-3">
-            <h5>TOTAL: 10€</h5>
-        </div> -->
         <div class="row d-flex align-items-center justify-content-end" style="padding: 0px 20px;">
             <button class="btn btn-primary customModalButton mr-2" (click)="modal.close()">Cancel</button>
-            <button class="btn btn-primary customModalButton" [disabled]="((seatsCounter === 0) || (bookingForm.invalid))" (click)="book(modal)">
+            <button class="btn btn-primary customModalButton"
+                [disabled]="((seatsCounter === 0) || (bookingForm.invalid))" (click)="book(modal)">
                 <span *ngIf="booking" class="spinner-border spinner-border-sm mr-1"></span>
                 Reserve
             </button>
         </div>
     </div>
 </ng-template>
-
-
-<!-- 
-    <div style="width: 100%;">
-        <a class="text-white" style="text-decoration: underline;" [attr.aria-expanded]="isCollapsed"
-            (click)="isCollapsed = !isCollapsed">Having the fedelity card?</a>
-    </div>
-    <div>
-        <div class="animated fadeIn" id="collapseCardForm" [ngbCollapse]="isCollapsed">
-        </div>
-    </div>
- -->

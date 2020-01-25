@@ -9,6 +9,7 @@ import { IBookingSettings, IBooking } from 'src/app/shared/models/IBooking';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BookingModificationModalComponent } from './booking-modification-modal/booking-modification-modal.component';
+import { BookingSettingsModalComponent } from './booking-settings-modal/booking-settings-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -128,27 +129,30 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   //Booking settings UI
   openBookingSettingsModal(modal: any) {
-    this._bookingService.getBookingSettings()
-      .subscribe(res => {
-        this.bookingSettingsForm = this._formBuilder.group({
-          maxAmountBooking: [res.maximumAmountBookings, Validators.required],
-          pricePerTicket: [res.pricePerTicket, Validators.required]
-        });
-        this._modalService.open(modal, { centered: false, backdrop: 'static' });
-      });
+    this._modalService.open(BookingSettingsModalComponent);
+    // this._bookingService.getBookingSettings()
+    //   .subscribe(res => {
+    //     this.bookingSettingsForm = this._formBuilder.group({
+    //       maxAmountBooking: [res.maximumAmountBookings, Validators.required],
+    //       pricePerTicket: [res.pricePerTicket, Validators.required]
+    //     });
+    //     this._modalService.open(modal, { centered: false, backdrop: 'static' });
+    //   });
   }
-  saveBookingSettings(modal: any) {
-    this.loadingBookingSettings = true;
-    const modifiedBookingSettings: IBookingSettings = {
-      maximumAmountBookings: this.bookingSettingsForm.get('maxAmountBooking').value,
-      pricePerTicket: this.bookingSettingsForm.get('pricePerTicket').value
-    };
-    this._bookingService.updateBookingSettings(modifiedBookingSettings)
-      .subscribe(res => {
-        this.loadingBookingSettings = false;
-        modal.close();
-      });
-  }
+
+  //DELETE
+  // saveBookingSettings(modal: any) {
+  //   this.loadingBookingSettings = true;
+  //   const modifiedBookingSettings: IBookingSettings = {
+  //     maximumAmountBookings: this.bookingSettingsForm.get('maxAmountBooking').value,
+  //     pricePerTicket: this.bookingSettingsForm.get('pricePerTicket').value
+  //   };
+  //   this._bookingService.updateBookingSettings(modifiedBookingSettings)
+  //     .subscribe(res => {
+  //       this.loadingBookingSettings = false;
+  //       modal.close();
+  //     });
+  // }
 
   ngAfterViewInit(): void {
     fromEvent(this.userFilter.nativeElement, 'keyup')
