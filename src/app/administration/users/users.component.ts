@@ -5,9 +5,10 @@ import { ReservationService } from 'src/app/shared/services/reservation.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { IBookingSettings } from 'src/app/shared/models/IBooking';
+import { IBookingSettings, IBooking } from 'src/app/shared/models/IBooking';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { BookingModificationModalComponent } from './booking-modification-modal/booking-modification-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -79,7 +80,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
       });
   }
   public modifyUserReservation(reservation: IReservation) {
-    //Open modal with form to modify current reservation
+    const bookingModificationModalRef = this._modalService.open(BookingModificationModalComponent);
+    bookingModificationModalRef.componentInstance.booking = {...reservation};
   }
 
   public getUpdatedUser(id: number) { //Needed to update the single user in the users list
