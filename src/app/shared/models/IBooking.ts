@@ -3,7 +3,8 @@ export interface IBooking {
     userId: number,
     reservedSeats: number,
     date: string,
-    time: string
+    time: string,
+    id?: number
 }
 
 export interface IBookingSettings {

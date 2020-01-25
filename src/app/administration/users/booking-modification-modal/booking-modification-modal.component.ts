@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IBooking } from 'src/app/shared/models/IBooking';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReservationService } from 'src/app/shared/services/reservation.service';
 
 @Component({
   selector: 'app-booking-modification-modal',
@@ -10,12 +11,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class BookingModificationModalComponent implements OnInit {
   @Input() booking: IBooking = null;
+  @Output() savedModifications = new EventEmitter<number>(); //Passed current user id
 
   public bookingForm: FormGroup;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private _formBuilder: FormBuilder) {
+    private _formBuilder: FormBuilder,
+    private _reservationService: ReservationService) {
       this._initBookingForm();
   }
 
@@ -34,5 +37,21 @@ export class BookingModificationModalComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close();
+  }
+  saveChanges() {
+    const modifiedBooking: IBooking = {
+      id: this.booking.id,
+      movieId: this.bookingForm.get('movieId').value,
+      reservedSeats: this.bookingForm.get('reservedSeats').value,
+      userId: this.booking.userId,
+      date: this.bookingForm.get('date').value,
+      time: this.bookingForm.get('time').value
+    }
+    this._reservationService.saveBookingModifications(modifiedBooking)
+      .subscribe(res => {
+        //loading...
+        this.activeModal.close();
+        this.savedModifications.emit(this.booking.userId);
+      });
   }
 }

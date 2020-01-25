@@ -82,6 +82,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public modifyUserReservation(reservation: IReservation) {
     const bookingModificationModalRef = this._modalService.open(BookingModificationModalComponent);
     bookingModificationModalRef.componentInstance.booking = {...reservation};
+    bookingModificationModalRef.componentInstance.savedModifications
+      .subscribe($event => {
+        this.getUpdatedUser($event)
+      });
   }
 
   public getUpdatedUser(id: number) { //Needed to update the single user in the users list
