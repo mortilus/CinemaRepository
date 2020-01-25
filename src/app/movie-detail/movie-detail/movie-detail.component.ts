@@ -8,6 +8,7 @@ import { IBooking, IBookingSettings } from 'src/app/shared/models/IBooking';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BookingModalComponent } from './booking-modal/booking-modal.component';
 
 @Component({
   selector: 'app-movie-detail',
@@ -90,10 +91,15 @@ export class MovieDetailComponent implements OnInit {
       .subscribe(res => {
         if (res[0])
           this.seatObj = res[0];
-        this._modalService.open(this._modalToOpen, { size: 'lg' });
+        const modalRef = this._modalService.open(BookingModalComponent, { centered: true, size: 'lg' });
+        modalRef.componentInstance.selectedTime = this.selectedTime;
+        modalRef.componentInstance.selectedMovie = this.selectedMovie;
+        modalRef.componentInstance.seatObj = this.seatObj;
+        modalRef.componentInstance.bookingSettings = this.bookingSettings;
       });
   }
 
+  //DELETE
   public addSeat() {
     this.seatsCounter++;
   }
@@ -103,6 +109,7 @@ export class MovieDetailComponent implements OnInit {
 
   get bookinFormControls() { return this.bookingForm.controls }
 
+  //DELETE
   public book(modal: any) {
     this.booking = true;
     const reservation: IBooking = {

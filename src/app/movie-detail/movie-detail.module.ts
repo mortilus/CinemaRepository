@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { BookingSystemComponent } from './movie-detail/booking-system/booking-system.component';
 import { FooterComponent } from './movie-detail/footer/footer.component';
+import { BookingModalComponent } from './movie-detail/booking-modal/booking-modal.component';
 
 const routes: Routes = [
   {
@@ -14,11 +15,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MovieDetailComponent, BookingSystemComponent, FooterComponent],
+  declarations: [MovieDetailComponent, BookingSystemComponent, FooterComponent, BookingModalComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule
+  ],
+  entryComponents: [
+    BookingModalComponent
   ]
 })
 export class MovieDetailModule { }
