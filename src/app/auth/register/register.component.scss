@@ -37,7 +37,8 @@ form:before {
   position: absolute;
   top: 0;
   width: 100%;
-  background: linear-gradient(to bottom, #191919 0, #000 100%) no-repeat #000;
+  // background: linear-gradient(to bottom, #191919 0, #000 100%) no-repeat #000;
+  background: linear-gradient(to bottom,#5c5c5c 0,#000 100%) no-repeat #000;
   // background: rgb(58, 58, 58);
   box-shadow: 0 0 20px 1px rgba(100, 100, 100, 0.6);
   // background-color: rgba(0,0,0,0.3);
