@@ -73,6 +73,7 @@ export class MovieDetailComponent implements OnInit {
     this.selectedTime = time;
     this._getMovieSeats();
   }
+  
   private _getMovieSeats() {
     this._moviesService.getSeatsByMovieId(this.selectedMovie.id)
       .subscribe(res => {

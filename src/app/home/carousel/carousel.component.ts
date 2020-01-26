@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 
 @Component({
@@ -18,5 +18,4 @@ export class CarouselComponent implements OnInit {
           this.movies = [...list];
       })
   }
-
 }

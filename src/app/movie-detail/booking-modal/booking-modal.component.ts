@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BookingService } from 'src/app/shared/services/booking.service';
@@ -12,7 +12,7 @@ import { IMovie } from 'src/app/shared/models/IMovie';
   templateUrl: './booking-modal.component.html',
   styleUrls: ['./booking-modal.component.scss']
 })
-export class BookingModalComponent implements OnInit {
+export class BookingModalComponent {
   @Input() selectedTime: { date: string, time: string };
   @Input() selectedMovie: IMovie;
   @Input() seatObj: { assigned: number, available: number };
@@ -36,9 +36,6 @@ export class BookingModalComponent implements OnInit {
       idNumber: ['', Validators.required],
       fedelityCardNumber: ['']
     });
-  }
-
-  ngOnInit() {
   }
 
   public addSeat() {
