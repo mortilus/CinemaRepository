@@ -38,6 +38,7 @@ export class BookingModificationModalComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
+  
   saveChanges() {
     const modifiedBooking: IBooking = {
       id: this.booking.id,
@@ -49,7 +50,6 @@ export class BookingModificationModalComponent implements OnInit {
     }
     this._reservationService.saveBookingModifications(modifiedBooking)
       .subscribe(res => {
-        //loading...
         this.activeModal.close();
         this.savedModifications.emit(this.booking.userId);
       });

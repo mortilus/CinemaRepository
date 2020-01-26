@@ -42,5 +42,4 @@ export class BookingSettingsModalComponent implements OnInit {
         this.activeModal.close();
       });
   }
-
 }

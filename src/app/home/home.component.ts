@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this._router.navigate(['/home/movies/'+id]);
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void { //Needed for the movie search
     fromEvent(this.movieFilter.nativeElement, 'keyup')
       .pipe(
         debounceTime(400),

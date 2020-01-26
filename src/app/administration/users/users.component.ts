@@ -5,7 +5,6 @@ import { ReservationService } from 'src/app/shared/services/reservation.service'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { IBookingSettings, IBooking } from 'src/app/shared/models/IBooking';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BookingModificationModalComponent } from './booking-modification-modal/booking-modification-modal.component';
