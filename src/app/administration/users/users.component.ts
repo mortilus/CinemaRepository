@@ -130,29 +130,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   //Booking settings UI
   openBookingSettingsModal(modal: any) {
     this._modalService.open(BookingSettingsModalComponent);
-    // this._bookingService.getBookingSettings()
-    //   .subscribe(res => {
-    //     this.bookingSettingsForm = this._formBuilder.group({
-    //       maxAmountBooking: [res.maximumAmountBookings, Validators.required],
-    //       pricePerTicket: [res.pricePerTicket, Validators.required]
-    //     });
-    //     this._modalService.open(modal, { centered: false, backdrop: 'static' });
-    //   });
   }
-
-  //DELETE
-  // saveBookingSettings(modal: any) {
-  //   this.loadingBookingSettings = true;
-  //   const modifiedBookingSettings: IBookingSettings = {
-  //     maximumAmountBookings: this.bookingSettingsForm.get('maxAmountBooking').value,
-  //     pricePerTicket: this.bookingSettingsForm.get('pricePerTicket').value
-  //   };
-  //   this._bookingService.updateBookingSettings(modifiedBookingSettings)
-  //     .subscribe(res => {
-  //       this.loadingBookingSettings = false;
-  //       modal.close();
-  //     });
-  // }
 
   ngAfterViewInit(): void {
     fromEvent(this.userFilter.nativeElement, 'keyup')
