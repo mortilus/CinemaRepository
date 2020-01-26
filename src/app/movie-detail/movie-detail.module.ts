@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { BookingSystemComponent } from './movie-detail/booking-system/booking-system.component';
 import { FooterComponent } from './movie-detail/footer/footer.component';
 import { BookingModalComponent } from './movie-detail/booking-modal/booking-modal.component';
+import { TrailerModalComponent } from './movie-detail/trailer-modal/trailer-modal.component';
 
 const routes: Routes = [
   {
@@ -15,14 +16,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MovieDetailComponent, BookingSystemComponent, FooterComponent, BookingModalComponent],
+  declarations: [MovieDetailComponent, BookingSystemComponent, FooterComponent, BookingModalComponent, TrailerModalComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule
   ],
   entryComponents: [
-    BookingModalComponent
+    BookingModalComponent,
+    TrailerModalComponent
   ]
 })
 export class MovieDetailModule { }

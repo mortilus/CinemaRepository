@@ -7,6 +7,7 @@ import { ISeat } from 'src/app/shared/models/ISeat';
 import { IBookingSettings } from 'src/app/shared/models/IBooking';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { BookingModalComponent } from './booking-modal/booking-modal.component';
+import { TrailerModalComponent } from './trailer-modal/trailer-modal.component';
 
 @Component({
   selector: 'app-movie-detail',
@@ -81,5 +82,10 @@ export class MovieDetailComponent implements OnInit {
         modalRef.componentInstance.seatObj = this.seatObj;
         modalRef.componentInstance.bookingSettings = this.bookingSettings;
       });
+  }
+
+  showTrailer() {
+    const modalRef = this._modalService.open(TrailerModalComponent);
+    modalRef.componentInstance.url = this.selectedMovie.trailer;
   }
 }
