@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IMovie } from 'src/app/shared/models/IMovie';
-import { ISeat } from 'src/app/shared/models/ISeat';
-import { IBooking } from 'src/app/shared/models/IBooking';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { IMovie } from 'src/app/shared/interfaces/IMovie';
+import { ISeat } from 'src/app/shared/interfaces/ISeat';
+import { IBookingSettings } from 'src/app/shared/interfaces/IBooking';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { BookingModalComponent } from './booking-modal/booking-modal.component';
+import { TrailerModalComponent } from './trailer-modal/trailer-modal.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-movie-detail',
@@ -21,34 +22,33 @@ export class MovieDetailComponent implements OnInit {
   public selectedTime: { date: string, time: string } = null;
   public isCollapsed: boolean = true;
 
-  //Modal variables
-  private _modalToOpen: any = null;
-  public seatsCounter: number = 0;
+  //Booking modal variables
   public seatObj: ISeat = null;
   public booking: boolean = false;
   public fidelityCardNumber: string = '';
+  public bookingSettings: IBookingSettings = null;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _moviesService: MoviesService,
     private _modalService: NgbModal,
-    private _authService: AuthService,
     private _bookingService: BookingService,
-    private _router: Router,
-    private _formBuilder: FormBuilder) {
+    private _sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
+    this._initBookingSettings();
     this._initMovie();
   }
 
   private _initMovie() {
+    this.todayTimes = [];
+    this.tomorrowTimes = [];
     this._activatedRoute.paramMap.subscribe(param => {
       if (this._activatedRoute.snapshot.params.id) {
         this._moviesService.getMovieById(this._activatedRoute.snapshot.params.id)
           .subscribe(res => {
-            if (res)
-              this.selectedMovie = res;
+            this.selectedMovie = res;
             res.showtimes.map(item => {
               item.showtimes.map(time => {
                 if (time.date === 'today') {
@@ -62,44 +62,34 @@ export class MovieDetailComponent implements OnInit {
       }
     });
   }
+  private _initBookingSettings() {
+    this._bookingService.getBookingSettings()
+      .subscribe(bookingSettings => {
+        this.bookingSettings = bookingSettings;
+      });
+  }
 
-  public timeSelected(time: { date: string, time: string }, modal: any) {
+  public timeSelected(time: { date: string, time: string }) {
     this.selectedTime = time;
-    this._modalToOpen = modal;
     this._getMovieSeats();
   }
+  
   private _getMovieSeats() {
     this._moviesService.getSeatsByMovieId(this.selectedMovie.id)
       .subscribe(res => {
         if (res[0])
           this.seatObj = res[0];
-        this._modalService.open(this._modalToOpen, { size: 'lg' });
+        const modalRef = this._modalService.open(BookingModalComponent, { centered: true, size: 'lg' });
+        modalRef.componentInstance.selectedTime = this.selectedTime;
+        modalRef.componentInstance.selectedMovie = this.selectedMovie;
+        modalRef.componentInstance.seatObj = this.seatObj;
+        modalRef.componentInstance.bookingSettings = this.bookingSettings;
       });
   }
 
-  public addSeat() {
-    this.seatsCounter++;
+  showTrailer() {
+    const safeUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this.selectedMovie.trailer);
+    const modalRef = this._modalService.open(TrailerModalComponent, { size: 'lg' });
+    modalRef.componentInstance.url = safeUrl;
   }
-  public removeSeat() {
-    this.seatsCounter--;
-  }
-
-  public book(modal: any) {
-    this.booking = true;
-    const reservation: IBooking = {
-      userId: this._authService.curentLoggedUserValue.id,
-      movieId: this.selectedMovie.id,
-      reservedSeats: this.seatsCounter,
-      date: this.selectedTime.date,
-      time: this.selectedTime.time
-    }
-    this._bookingService.bookMovieTickets(reservation)
-      .subscribe(res => {
-        this.seatsCounter = 0;
-        this.booking = false;
-        modal.close();
-        this._router.navigate(['/home']);
-      })
-  }
-
 }

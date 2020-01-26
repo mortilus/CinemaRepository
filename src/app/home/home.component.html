@@ -1,21 +1,28 @@
 <app-carousel *ngIf="movies.length > 0"></app-carousel>
 <div class="container homeContainer pt-3">
-    <h3 class="mb-3">Highest rated</h3>
     <div class="row">
-        <div *ngFor="let movie of bestRatedMovies" class="animated fadeIn col-lg-3 col-md-4 col-6">
-            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
+        <div class="col-md-3">
+            <h3 class="mb-3">All movies</h3>
+        </div>
+        <div class="col-md-9 d-flex justify-content-end">
+            <input class="form-control customSearch" [(ngModel)]="movieSearch" #movieSearchId
+                placeholder="search movie">
+        </div>
+    </div>
+    <div class="row">
+        <div *ngFor="let movie of movies" class="animated fadeIn col-lg-3 col-md-4 col-6">
+            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer"
+                style="text-decoration: none;">
                 <img class="img-fluid" [src]="movie.poster" alt="image not found">
                 <h5 class="mt-2">{{ movie.title }}</h5>
             </div>
         </div>
     </div>
-    <h3 class="mb-3">All movies</h3>
+    <h3 class="mb-3">Highest rated</h3>
     <div class="row">
-        <input class="form-control customSearch" [(ngModel)]="movieSearch" #movieSearchId placeholder="search movie">
-    </div>
-    <div class="row">
-        <div *ngFor="let movie of movies" class="animated fadeIn col-lg-3 col-md-4 col-6">
-            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer" style="text-decoration: none;">
+        <div *ngFor="let movie of bestRatedMovies" class="animated fadeIn col-lg-3 col-md-4 col-6">
+            <div (click)="showMovieDetails(movie.id)" class="d-block mb-4 h-100 imageContainer"
+                style="text-decoration: none;">
                 <img class="img-fluid" [src]="movie.poster" alt="image not found">
                 <h5 class="mt-2">{{ movie.title }}</h5>
             </div>

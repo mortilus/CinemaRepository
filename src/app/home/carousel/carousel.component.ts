@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MoviesService } from 'src/app/shared/services/movies.service';
 
 @Component({
@@ -12,11 +12,10 @@ export class CarouselComponent implements OnInit {
   constructor(private _movieService: MoviesService) { }
 
   ngOnInit() {
-    this._movieService.getMovies('', 1, 3)
+    this._movieService.getMovies('', 2, 4)
       .subscribe(list => {
         if(list.length > 2)
           this.movies = [...list];
       })
   }
-
 }

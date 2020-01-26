@@ -9,23 +9,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/home">Movies <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="/home">Movies <span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <!-- <ul class="navbar-nav mr-auto" *ngxPermissionsOnly="['admin']">
-          <li class="nav-item active">
-            <a class="nav-link">Administration</a>
-          </li>
-        </ul> -->
-
         <!-- Only admins can access this page -->
         <div class="nav-item dropdown" *ngxPermissionsOnly="['admin']">
-          <button class="btn btn-outline-secondary nav-link dropdown-toggle mr-4" href="#" id="navbarDropdownMenuLink"
+          <button class="btn btn-outline-secondary nav-link dropdown-toggle mr-4" href="#" id="navbarAdministrationUsers"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Administration
           </button>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu" aria-labelledby="navbarAdministrationUsers">
             <button class="btn btn-default dropdown-item" (click)="goToAdministrationUsers()">
               <i class="fa fa-user"></i>
               Users
@@ -33,12 +27,12 @@
           </div>
         </div>
         <div class="nav-item dropdown">
-          <button class="btn btn-outline-secondary nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+          <button class="btn btn-outline-secondary nav-link dropdown-toggle" href="#" id="navbarUsersInformation"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-user"></i>
             {{ currentUser.firstName }}
           </button>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="dropdown-menu" aria-labelledby="navbarUsersInformation">
             <button class="btn btn-default dropdown-item" (click)="logout()">
               <i class="fa fa-sign-out"></i>
               Logout
@@ -52,59 +46,7 @@
 
 <main role="main">
   <router-outlet></router-outlet>
-
-  <!-- <footer class="container">
-  </footer> -->
+  <footer class="text-center text-white pt-4">
+    Movie app
+  </footer>
 </main>
-
-
-<!-- <nav *ngIf="currentUser" class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <i class="fa fa-film" style="color: white; font-size: 20px;" href="/home"></i>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/home">Movies <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <div class="input-group mr-sm-2">
-        <div class="input-group-prepend">
-          <span class="input-group-text" style="background-color: lightgray;" id="basic-addon1">
-            <i class="fa fa-search"></i>
-          </span>
-        </div>
-        <input type="text" class="form-control" placeholder="Movie..." aria-describedby="basic-addon1">
-      </div>
-      <div class="nav-item dropdown">
-        <button class="btn btn-outline-secondary nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user"></i>
-          {{ currentUser.firstName }}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <button class="btn btn-default dropdown-item" (click)="logout()">
-            <i class="fa fa-sign-out"></i>
-            Logout
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</nav>
-
-<div>
-  <div class="container">
-        <router-outlet></router-outlet>
-  </div>
-</div>
-
-<footer class="text-center">
-  <p>
-    Cinama App @copyright Michele Vendrame
-  </p>
-</footer> -->

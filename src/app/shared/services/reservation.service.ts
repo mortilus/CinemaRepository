@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MainService } from './main.service';
 import { HttpClient } from '@angular/common/http';
-import { IReservation } from '../models/IUser';
+import { IReservation } from '../interfaces/IUser';
+import { IBooking } from '../interfaces/IBooking';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +25,9 @@ export class ReservationService {
     const url = `${this._url}/reservations/${id}`;
     return this._http.delete<any>(url);
   }
+
+  saveBookingModifications(booking: IBooking) {
+    const url = `${this._url}/reservations/${booking.id}`;
+    return this._http.patch<any>(url, booking)
+  } 
 }

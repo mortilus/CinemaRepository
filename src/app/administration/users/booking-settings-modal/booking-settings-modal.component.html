@@ -1,0 +1,26 @@
+<div class="modal-content modalContainer">
+    <div class="modal-header" style="border-bottom: none;">
+        <h5>Booking settings</h5>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="bookingSettingsForm" (ngSubmit)="saveBookingSettings()">
+            <div class="form-group text-left">
+                <label class="text-white">Maximum number of places that can be booked</label>
+                <input class="customInputField form-control" type="number" formControlName="maxAmountBooking">
+            </div>
+            <div class="form-group text-left">
+                <label class="text-white">Price per ticket</label>
+                <div class="d-flex align-items-center justify-content-between">
+                    <input class="customInputField form-control mr-2" formControlName="pricePerTicket"
+                        type="number"><span class="text-white">€</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="border-top: none;">
+        <button class="btn customModalButton" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-danger" (click)="saveBookingSettings()">
+            <span *ngIf="loadingBookingSettings" class="spinner-border spinner-border-sm mr-1"></span>
+            Save</button>
+    </div>
+</div>

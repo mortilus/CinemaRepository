@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './shared/services/auth.service';
 import { Router } from '@angular/router';
-import { ILoggedUser } from './shared/models/IUser';
+import { ILoggedUser } from './shared/interfaces/IUser';
 import { Subscription } from 'rxjs';
 import { NgxPermissionsService } from 'ngx-permissions';
 

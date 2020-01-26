@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MoviesService } from 'src/app/shared/services/movies.service';
-import { IMovie } from 'src/app/shared/models/IMovie';
+import { IMovie } from 'src/app/shared/interfaces/IMovie';
 
 @Component({
   selector: 'app-footer',
@@ -19,7 +19,6 @@ export class FooterComponent implements OnInit {
   }
 
   showMovieDetails(movieId: number) {
-      this._router.navigate(['/home/movies/' + movieId]);
+      this._router.navigate(['/home/movies/' + movieId]); 
   }
-
 }

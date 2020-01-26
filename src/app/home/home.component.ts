@@ -3,7 +3,7 @@ import { MoviesService } from '../shared/services/movies.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { IMovie } from '../shared/models/IMovie';
+import { IMovie } from '../shared/interfaces/IMovie';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this._router.navigate(['/home/movies/'+id]);
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void { //Needed for the movie search
     fromEvent(this.movieFilter.nativeElement, 'keyup')
       .pipe(
         debounceTime(400),
