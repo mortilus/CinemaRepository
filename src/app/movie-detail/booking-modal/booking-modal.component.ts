@@ -3,9 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IBooking, IBookingSettings } from 'src/app/shared/models/IBooking';
+import { IBooking, IBookingSettings } from 'src/app/shared/interfaces/IBooking';
 import { Router } from '@angular/router';
-import { IMovie } from 'src/app/shared/models/IMovie';
+import { IMovie } from 'src/app/shared/interfaces/IMovie';
 
 @Component({
   selector: 'app-booking-modal',

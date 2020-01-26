@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { MainService } from './main.service';
 import { Observable } from 'rxjs';
-import { IMovie } from '../models/IMovie';
-import { ISeat } from '../models/ISeat';
+import { IMovie } from '../interfaces/IMovie';
+import { ISeat } from '../interfaces/ISeat';
 
 @Injectable({
   providedIn: 'root'

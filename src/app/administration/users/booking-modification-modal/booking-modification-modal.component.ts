@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IBooking } from 'src/app/shared/models/IBooking';
+import { IBooking } from 'src/app/shared/interfaces/IBooking';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
 
@@ -38,7 +38,7 @@ export class BookingModificationModalComponent implements OnInit {
   closeModal() {
     this.activeModal.close();
   }
-  
+
   saveChanges() {
     const modifiedBooking: IBooking = {
       id: this.booking.id,

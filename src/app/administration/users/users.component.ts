@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { IUser, IReservation } from 'src/app/shared/models/IUser';
+import { IUser, IReservation } from 'src/app/shared/interfaces/IUser';
 import { UsersService } from 'src/app/shared/services/users.service';
 import { ReservationService } from 'src/app/shared/services/reservation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

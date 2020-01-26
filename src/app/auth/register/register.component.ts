@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { IError } from 'src/app/shared/models/IError';
+import { IError } from 'src/app/shared/interfaces/IError';
 import { Router } from '@angular/router';
 
 @Component({

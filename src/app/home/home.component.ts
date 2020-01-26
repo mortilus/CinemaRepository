@@ -3,7 +3,7 @@ import { MoviesService } from '../shared/services/movies.service';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { IMovie } from '../shared/models/IMovie';
+import { IMovie } from '../shared/interfaces/IMovie';
 
 @Component({
   selector: 'app-home',

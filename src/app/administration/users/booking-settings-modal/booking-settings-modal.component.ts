@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IBookingSettings } from 'src/app/shared/models/IBooking';
+import { IBookingSettings } from 'src/app/shared/interfaces/IBooking';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { IUser, ILoggedUser, IRegisterUser } from '../models/IUser';
+import { IUser, ILoggedUser, IRegisterUser } from '../interfaces/IUser';
 import { MainService } from './main.service';
 import { map } from 'rxjs/operators';
-import { IError } from '../models/IError';
+import { IError } from '../interfaces/IError';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 @Injectable({
