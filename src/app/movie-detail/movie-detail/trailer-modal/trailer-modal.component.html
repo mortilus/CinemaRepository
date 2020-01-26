@@ -1,7 +1,10 @@
 <div class="modal-content">
-    <div class="modalbody" *ngIf="url">
+    <div class="modal-header d-flex justify-content-end">
+        <i class="fa fa-close" style="color: white; cursor: pointer;" (click)="activeModal.close()"></i>
+    </div>
+    <div class="modalbody" style="padding: 20px">
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/c9F5kMUfFKk" allowscriptaccess="always"></iframe>
+            <iframe class="embed-responsive-item" [src]="url" allowscriptaccess="always"></iframe>
         </div>
     </div>
 </div>

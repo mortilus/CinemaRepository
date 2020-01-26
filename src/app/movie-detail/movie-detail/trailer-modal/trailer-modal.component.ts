@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
@@ -8,14 +8,8 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./trailer-modal.component.scss']
 })
 export class TrailerModalComponent {
-  @Input() url: string = null;
+  @Input() url: string;
 
-  safeSrc: SafeResourceUrl;
-
-  constructor(private sanitizer: DomSanitizer) {
-    if (this.url) {
-      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-    }
-  }
+  constructor(public activeModal: NgbActiveModal) { }
 
 }
