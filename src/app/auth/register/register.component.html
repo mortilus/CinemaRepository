@@ -9,7 +9,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6 text-left">
                                     <label>First name</label>
-                                    <input class="form-control" type="text" formControlName="firstName"
+                                    <input class="form-control customInput" type="text" formControlName="firstName"
                                         [ngClass]="{ 'is-invalid': submitted && formControls.firstName.errors }">
                                     <div *ngIf="submitted && formControls.firstName.errors"
                                         class="invalid-feedback d-block">
@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="form-group col-md-6 text-left">
                                     <label>Last name</label>
-                                    <input class="form-control" type="text" formControlName="lastName"
+                                    <input class="form-control customInput" type="text" formControlName="lastName"
                                         [ngClass]="{ 'is-invalid': submitted && formControls.lastName.errors }">
                                     <div *ngIf="submitted && formControls.lastName.errors"
                                         class="invalid-feedback d-block">
@@ -28,7 +28,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group text-left">
-                                    <input class="form-control" placeholder="dd-mm-yyyy" name="dp"
+                                    <input class="form-control customInput" placeholder="dd-mm-yyyy" name="dp"
                                         formControlName="birthDate" ngbDatepicker #d="ngbDatepicker"
                                         [ngClass]="{ 'is-invalid': submitted && formControls.birthDate.errors }">
                                     <div class="input-group-append">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group text-left">
                                 <label>Email</label>
-                                <input class="form-control " type="text" formControlName="email"
+                                <input class="form-control customInput" type="text" formControlName="email"
                                     [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }">
                                 <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback d-block">
                                     <div *ngIf="formControls.email.errors.required">Email is required</div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="form-group text-left">
                                 <label>Password</label>
-                                <input class="form-control" type="password" formControlName="password"
+                                <input class="form-control customInput" type="password" formControlName="password"
                                     [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }">
                                 <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback d-block">
                                     <div *ngIf="formControls.password.errors.required">Password is required</div>
@@ -61,8 +61,8 @@
                                 </div>
                             </div>
                             <div class="form-group float-right">
-                                <a routerLink="/login" class="btn btn-link mr-3">Login</a>
-                                <button [disabled]="loading" class="btn btn-primary" type="submit">
+                                <a routerLink="/login" class="btn btn-link mr-3 customLink">Login</a>
+                                <button [disabled]="loading" class="btn customSubmitButton" type="submit">
                                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                     Register
                                 </button>
